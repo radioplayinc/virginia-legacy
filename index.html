@@ -1,0 +1,3138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Virginia Legacy — Loading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="assets/asset-01.jpg" media="(min-width: 701px)" />
+    <link rel="preload" as="image" href="assets/asset-02.jpg" media="(max-width: 700px)" />
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.17/dist/motion.js"></script>
+    <style>
+      :root {
+        --navy-950: #04122b;
+        --navy-900: #071a3d;
+        --navy-800: #0a2450;
+        --blue-500: #2e9bff;
+        --blue-300: #57b6ff;
+        --orange-500: #ff7a1a;
+        --orange-400: #ffa03c;
+        --ink: #ffffff;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: "Barlow", system-ui, sans-serif;
+        background: var(--navy-950);
+        overflow-x: hidden;
+      }
+      button { min-height: 2.75rem; font-family: inherit; cursor: pointer; }
+
+      /* ---------- Home (revealed when the loader exits) ---------- */
+      #home {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: calc(4.25rem + 2rem) 1.25rem 2rem;
+        text-align: center;
+        background-color: var(--navy-950);
+        /* web version: top-down Legacy court graphic; overlay is kept
+           a touch lighter than before so the wood court, its lines and
+           the orange side bars show through, while the navy still dims
+           the center-court crest enough for the home crest and title
+           sitting on top of it to read clearly */
+        background-image:
+          linear-gradient(rgba(4, 18, 43, 0.5), rgba(4, 18, 43, 0.62)),
+          url("assets/asset-01.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: #fff;
+      }
+      /* portrait Legacy court graphic on phones: the vertical
+         counterpart of the web court, same lighter overlay as the
+         web version so the wood court and center-court crest show
+         through while the home crest and title stay readable */
+      @media (max-width: 700px) {
+        #home {
+          background-image:
+            linear-gradient(rgba(4, 18, 43, 0.5), rgba(4, 18, 43, 0.62)),
+            url("assets/asset-02.jpg");
+        }
+      }
+      #home img {
+        width: 132px;
+        height: auto;
+        filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
+      }
+      #home h1 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 7vw, 3rem);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin: 0.9rem 0 0;
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+      }
+      #home p {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--orange-400);
+        text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+      }
+      /* ---------- Mailing list form (the home screen's one job) ---------- */
+      .mail-form {
+        margin-top: 2.1rem;
+        width: min(92vw, 430px);
+        padding: 1.55rem 1.4rem 1.4rem;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(4, 18, 43, 0.62);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 22px 44px rgba(0, 0, 0, 0.4);
+        text-align: center;
+      }
+      .mail-form [hidden] { display: none; }
+      .mail-form h2 {
+        margin: 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      #home .mail-sub {
+        margin: 0.45rem 0 0;
+        font-size: 0.98rem;
+        font-weight: 400;
+        letter-spacing: normal;
+        text-transform: none;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.85);
+        text-shadow: none;
+      }
+      .mail-row {
+        margin-top: 1.05rem;
+        display: flex;
+        gap: 0.5rem;
+      }
+      .mail-row input {
+        flex: 1;
+        min-width: 0;
+        min-height: 3rem;
+        padding: 0.7rem 1.05rem;
+        border-radius: 999px;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-family: "Barlow", sans-serif;
+        font-size: 1rem;
+      }
+      .mail-row input::placeholder { color: rgba(255, 255, 255, 0.55); }
+      .mail-row input:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .mail-row input[aria-invalid="true"] { border-color: #ff9d85; }
+      #mailSubmit {
+        flex: none;
+        border: none;
+        border-radius: 999px;
+        padding: 0.7rem 1.6rem;
+        background: var(--orange-500);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        box-shadow: 0 10px 24px rgba(255, 122, 26, 0.35);
+        transition: transform 0.15s ease, background 0.15s ease;
+      }
+      #mailSubmit:hover { background: #f56d0d; transform: translateY(-1px); }
+      #mailSubmit:active { transform: translateY(1px); }
+      #mailSubmit:disabled { opacity: 0.65; cursor: default; transform: none; }
+      #mailSubmit:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+      #home .mail-error {
+        margin: 0.75rem 0 0;
+        font-size: 0.92rem;
+        font-weight: 500;
+        letter-spacing: normal;
+        text-transform: none;
+        line-height: 1.45;
+        color: #ffb59d;
+        text-shadow: none;
+      }
+      #home .mail-done {
+        margin: 0.9rem 0 0;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: normal;
+        text-transform: none;
+        line-height: 1.45;
+        color: #7ee2a8;
+        text-shadow: none;
+      }
+      @media (max-width: 420px) {
+        .mail-row { flex-direction: column; }
+        #mailSubmit { width: 100%; }
+      }
+      @media (prefers-color-scheme: dark) {
+        #home p { color: var(--orange-400); }
+      }
+
+      /* ---------- Loader ---------- */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background:
+          radial-gradient(ellipse 90% 55% at 50% 108%, rgba(255, 122, 26, 0.16), transparent 60%),
+          radial-gradient(ellipse 120% 90% at 50% 30%, var(--navy-800) 0%, var(--navy-900) 52%, var(--navy-950) 100%);
+        color: var(--ink);
+        border-radius: 0 0 28px 28px;
+      }
+      #loader.gone { visibility: hidden; }
+
+      /* faint court lines behind the crest */
+      .court {
+        position: absolute;
+        left: 50%;
+        top: 44%;
+        width: min(150vw, 880px);
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      /* ambient wave lines (AMB-021) */
+      .waves {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        height: 120px;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .waves svg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 200%;
+        height: 100%;
+      }
+      .waves .w1 { animation: drift 16s linear infinite; opacity: 0.30; }
+      .waves .w2 { animation: drift-rev 24s linear infinite; opacity: 0.16; }
+      @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      @keyframes drift-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+      .stage {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -2.5rem;
+      }
+      #logoBounce { will-change: transform; }
+      #logoClip {
+        clip-path: inset(0% 32% 0% 32%);
+        will-change: clip-path, transform;
+      }
+      #logoSquash { will-change: transform; transform-origin: 50% 100%; }
+      #logoImg {
+        display: block;
+        width: min(76vw, 400px);
+        height: auto;
+        filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35));
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+      .shadow {
+        width: 46%;
+        height: 20px;
+        margin-top: 14px;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 68%);
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .ring {
+        position: absolute;
+        left: 50%;
+        bottom: 2px;
+        width: 150px;
+        height: 34px;
+        margin-left: -75px;
+        border: 2px solid var(--blue-300);
+        border-radius: 50%;
+        opacity: 0;
+        pointer-events: none;
+        animation: ring-out 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      .ring.hot { border-color: var(--orange-400); }
+      @keyframes ring-out {
+        0% { transform: scale(0.35); opacity: 0.55; }
+        100% { transform: scale(1.9); opacity: 0; }
+      }
+
+      .wordmark {
+        margin-top: 1.6rem;
+        max-width: 96vw;
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: clamp(0.92rem, 4.2vw, 1.45rem);
+        letter-spacing: 0.36em;
+        text-indent: 0.36em;
+        color: #fff;
+        white-space: nowrap;
+      }
+      @media (max-width: 480px) {
+        .wordmark { gap: 0.55rem; letter-spacing: 0.24em; text-indent: 0.24em; }
+        .wordmark .rule { width: 16px; }
+      }
+      .wordmark .rule {
+        display: block;
+        width: clamp(22px, 7vw, 44px);
+        height: 3px;
+        border-radius: 2px;
+        background: var(--orange-500);
+        opacity: 0;
+      }
+      .wordmark .ch { display: inline-block; opacity: 0; will-change: transform, opacity; }
+
+      .load-ui {
+        margin-top: 2.1rem;
+        width: min(64vw, 250px);
+        opacity: 0;
+      }
+      .bar {
+        height: 5px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.16);
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 3px;
+        background: linear-gradient(90deg, var(--orange-500), var(--orange-400));
+      }
+      .load-meta {
+        margin-top: 0.55rem;
+        display: flex;
+        justify-content: space-between;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 500;
+        font-size: 0.85rem;
+        letter-spacing: 0.3em;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      /* ---------- Enter ball button ---------- */
+      .enter-zone {
+        position: relative;
+        margin-top: 1.9rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      /* dimmed while loading; full color once it is ready to tap */
+      .enter-zone:not(.ready) #enterBtn img {
+        opacity: 0.45;
+        filter: saturate(0.55) drop-shadow(0 10px 16px rgba(0, 0, 0, 0.35));
+      }
+      .enter-zone:not(.ready) .enter-shadow { opacity: 0.22; }
+      .enter-zone:not(.ready) .enter-hint { opacity: 0.55; }
+      #enterBounce { will-change: transform; }
+      #enterSquash { will-change: transform; transform-origin: 50% 100%; }
+      #enterBtn {
+        display: block;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: none;
+        line-height: 0;
+        transition: transform 0.15s ease;
+      }
+      #enterBtn img {
+        display: block;
+        width: clamp(62px, 18vw, 77px);
+        height: auto;
+        border-radius: 50%;
+        filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.35));
+        user-select: none;
+        -webkit-user-drag: none;
+        pointer-events: none;
+        transition: opacity 0.35s ease, filter 0.35s ease;
+      }
+      #enterBtn:hover { transform: scale(1.05); }
+      #enterBtn:active { transform: scale(0.94); }
+      #enterBtn:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 5px; }
+      .enter-shadow {
+        width: 50px;
+        height: 8px;
+        margin-top: 10px;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 68%);
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .enter-hint {
+        margin: 0.85rem 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.57rem;
+        letter-spacing: 0.3em;
+        text-indent: 0.3em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      /* idle dribble loop, same settle pattern as the crest bounce */
+      @keyframes enter-dribble {
+        0% { transform: translateY(-46px); animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); }
+        30% { transform: translateY(0); animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        48% { transform: translateY(-20px); animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); }
+        62% { transform: translateY(0); animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        73% { transform: translateY(-8px); animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); }
+        82%, 100% { transform: translateY(0); }
+      }
+      @keyframes enter-squash {
+        0%, 26% { transform: scale(0.97, 1.05); }
+        30% { transform: scale(1.16, 0.8); }
+        36%, 58% { transform: scale(1, 1); }
+        62% { transform: scale(1.1, 0.87); }
+        68%, 78% { transform: scale(1, 1); }
+        82% { transform: scale(1.05, 0.93); }
+        88%, 100% { transform: scale(1, 1); }
+      }
+      @keyframes enter-shadow-pulse {
+        0% { transform: scaleX(0.5); opacity: 0.2; animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); }
+        30% { transform: scaleX(1); opacity: 0.5; animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        48% { transform: scaleX(0.68); opacity: 0.3; animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); }
+        62% { transform: scaleX(1); opacity: 0.5; animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        73% { transform: scaleX(0.84); opacity: 0.4; animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); }
+        82%, 100% { transform: scaleX(1); opacity: 0.5; }
+      }
+      .enter-zone.dribbling #enterBounce { animation: enter-dribble 1.7s infinite; }
+      .enter-zone.dribbling #enterSquash { animation: enter-squash 1.7s infinite; }
+      .enter-zone.dribbling .enter-shadow { animation: enter-shadow-pulse 1.7s infinite; }
+      @media (max-height: 640px) {
+        .enter-zone { margin-top: 1.15rem; }
+        #enterBtn img { width: 58px; }
+      }
+
+      #skipBtn {
+        position: absolute;
+        right: max(1rem, env(safe-area-inset-right));
+        bottom: max(1.1rem, env(safe-area-inset-bottom));
+        z-index: 3;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        background: rgba(4, 18, 43, 0.35);
+        color: rgba(255, 255, 255, 0.9);
+        padding: 0.55rem 1.2rem;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        transition: background 0.15s ease, border-color 0.15s ease;
+      }
+      #skipBtn:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.6); }
+
+      /* ---------- Fullscreen video ad (plays after entering) ---------- */
+      #ad {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #ad.gone { visibility: hidden; pointer-events: none; }
+      #adVideo {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+      .ad-tag {
+        position: absolute;
+        /* below the fixed site header so the header never covers it */
+        top: calc(max(0.5rem, env(safe-area-inset-top)) + 4.75rem);
+        left: max(1rem, env(safe-area-inset-left));
+        padding: 0.3rem 0.7rem;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.45);
+        color: rgba(255, 255, 255, 0.92);
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      #skipAdBtn {
+        position: absolute;
+        right: max(1rem, env(safe-area-inset-right));
+        bottom: max(1.25rem, env(safe-area-inset-bottom));
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        background: rgba(4, 18, 43, 0.55);
+        color: rgba(255, 255, 255, 0.92);
+        padding: 0.65rem 1.4rem;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+      }
+      #skipAdBtn:disabled { opacity: 0.55; cursor: default; }
+      #skipAdBtn:not(:disabled) {
+        background: var(--orange-500);
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 10px 24px rgba(255, 122, 26, 0.35);
+      }
+      #skipAdBtn:not(:disabled):hover { background: #f56d0d; }
+      #skipAdBtn:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 4px; }
+
+      /* ---------- Site header (appears once the visitor enters) ---------- */
+      /* Fixed header bar holding the brand and the hamburger. It stays
+         hidden on the loading screen and slides in as soon as the
+         visitor presses Enter (body.entered, set when the loader
+         exits), then stays above the ad (z 30), the coming-soon view
+         (z 40) and the home screen, so the menu is reachable from
+         every page after entry. The drawer and its scrim stay just
+         below it so the toggle remains visible to close the menu. */
+      #siteHeader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 60;
+        min-height: 4.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.5rem max(1rem, env(safe-area-inset-right)) 0.5rem max(1rem, env(safe-area-inset-left));
+        padding-top: max(0.5rem, env(safe-area-inset-top));
+        background: rgba(4, 18, 43, 0.82);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+        color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-100%);
+        pointer-events: none;
+        transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.45s;
+      }
+      body.entered #siteHeader {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+        transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+      }
+      #brandBtn {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-height: 2.75rem;
+        padding: 0.25rem 0.4rem 0.25rem 0;
+        border: none;
+        background: none;
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      #brandBtn img {
+        display: block;
+        height: 2.5rem;
+        width: auto;
+      }
+      #brandBtn:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+
+      /* ---------- Hamburger nav (in the header, all pages) ---------- */
+      #navToggle {
+        flex: none;
+        width: 3rem;
+        height: 3rem;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 12px;
+        background: rgba(4, 18, 43, 0.55);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: background 0.15s ease;
+      }
+      #navToggle:hover { background: rgba(4, 18, 43, 0.75); }
+      #navToggle:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+      #navToggle .bar-line {
+        display: block;
+        width: 20px;
+        height: 2.5px;
+        border-radius: 2px;
+        background: #fff;
+        transition: transform 0.25s ease, opacity 0.2s ease;
+      }
+      #navToggle[aria-expanded="true"] .bar-line:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+      #navToggle[aria-expanded="true"] .bar-line:nth-child(2) { opacity: 0; }
+      #navToggle[aria-expanded="true"] .bar-line:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+      #navScrim {
+        position: fixed;
+        inset: 0;
+        z-index: 54;
+        background: rgba(2, 8, 20, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      #navScrim.open { opacity: 1; pointer-events: auto; }
+
+      #navPanel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 55;
+        width: min(78vw, 300px);
+        padding: calc(max(0.5rem, env(safe-area-inset-top)) + 5.25rem) 1.5rem 2rem;
+        background: linear-gradient(180deg, var(--navy-800), var(--navy-950));
+        box-shadow: -18px 0 40px rgba(0, 0, 0, 0.45);
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.38s;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      #navPanel.open { transform: translateX(0); visibility: visible; transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s; }
+      #navPanel .nav-heading {
+        margin: 0 0 1rem;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: var(--orange-400);
+      }
+      .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0.95rem 0.25rem;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        background: none;
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1.55rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-align: left;
+        transition: color 0.15s ease, padding-left 0.15s ease;
+      }
+      .nav-link:hover { color: var(--orange-400); padding-left: 0.6rem; }
+      .nav-link:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .nav-link .chev { font-size: 1.1rem; color: var(--blue-300); }
+
+      /* ---------- Coming soon view ---------- */
+      #soonView {
+        position: fixed;
+        inset: 0;
+        /* above the loader and the ad, below the header and drawer,
+           so a section picked from any screen lands on top */
+        z-index: 40;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: calc(4.25rem + 2rem) 1.25rem 2rem;
+        text-align: center;
+        color: #fff;
+        background-color: var(--navy-950);
+        background-image:
+          linear-gradient(rgba(4, 18, 43, 0.62), rgba(4, 18, 43, 0.72)),
+          url("assets/asset-03.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+      }
+      @media (max-width: 700px) {
+        #soonView {
+          background-image:
+            linear-gradient(rgba(4, 18, 43, 0.56), rgba(4, 18, 43, 0.7)),
+            url("assets/asset-04.jpg");
+        }
+      }
+      #soonView.open { opacity: 1; pointer-events: auto; visibility: visible; transition: opacity 0.3s ease, visibility 0s; }
+      #soonView .soon-kicker {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.34em;
+        text-indent: 0.34em;
+        text-transform: uppercase;
+        color: var(--orange-400);
+        text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+      }
+      #soonView h2 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: clamp(2.6rem, 10vw, 4.2rem);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin: 0.4rem 0 0;
+        text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+      }
+      #soonView .soon-line {
+        margin: 0.6rem 0 0;
+        max-width: 26rem;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.88);
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+      }
+      #soonBack {
+        margin-top: 2rem;
+        border: none;
+        border-radius: 999px;
+        padding: 0.8rem 1.9rem;
+        background: var(--orange-500);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        box-shadow: 0 10px 24px rgba(255, 122, 26, 0.35);
+        transition: transform 0.15s ease, background 0.15s ease;
+      }
+      #soonBack:hover { background: #f56d0d; transform: translateY(-1px); }
+      #soonBack:active { transform: translateY(1px); }
+      #soonBack:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+
+      /* ---------- Coach spotlight (Coaches section) ---------- */
+      #coachView {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        color: #fff;
+        background-color: var(--navy-950);
+        background-image:
+          linear-gradient(rgba(4, 18, 43, 0.78), rgba(4, 18, 43, 0.88)),
+          url("assets/asset-03.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+      }
+      /* on phones the Coaches page sits over Dixon's on-court photo */
+      @media (max-width: 700px) {
+        #coachView {
+          background-image:
+            linear-gradient(rgba(4, 18, 43, 0.72), rgba(4, 18, 43, 0.85)),
+            url("assets/asset-05.jpg");
+        }
+      }
+      #coachView.open { opacity: 1; pointer-events: auto; visibility: visible; transition: opacity 0.3s ease, visibility 0s; }
+      .coach-wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: calc(4.25rem + 1.75rem) 1.25rem 3rem;
+      }
+      .coach-kicker {
+        margin: 0;
+        font-size: 0.92rem;
+        font-weight: 600;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: var(--orange-400);
+        text-shadow: 0 1px 10px rgba(0,0,0,0.6);
+      }
+      .coach-name {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: clamp(2.6rem, 9vw, 4.4rem);
+        line-height: 0.95;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        margin: 0.45rem 0 0;
+        text-shadow: 0 2px 16px rgba(0,0,0,0.55);
+      }
+      .coach-role {
+        margin: 0.55rem 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--blue-300);
+      }
+      .coach-photos {
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+      }
+      .coach-photo-profile { width: min(100%, 400px); }
+      .coach-photos figure { margin: 0; display: flex; flex-direction: column; gap: 0.45rem; }
+      .coach-photos img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        object-fit: cover;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.22);
+        box-shadow: 0 18px 36px rgba(0,0,0,0.45);
+        background: var(--navy-800);
+      }
+      .coach-photo-profile img { aspect-ratio: 1000 / 667; object-position: center; }
+      .coach-photos figcaption,
+      .coach-photo-bottom figcaption {
+        font-size: 0.82rem;
+        line-height: 1.4;
+        color: rgba(255,255,255,0.72);
+      }
+      /* locker-room photo closing the Coaches page, full width */
+      .coach-photo-bottom {
+        margin: 1.75rem 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .coach-photo-bottom img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 749 / 500;
+        object-fit: cover;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.22);
+        box-shadow: 0 18px 36px rgba(0,0,0,0.45);
+        background: var(--navy-800);
+      }
+      .coach-intro {
+        margin: 1.4rem 0 0;
+        max-width: 46rem;
+        font-size: 1.08rem;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.92);
+      }
+      /* visual stat cards: icon + big number, no text pills */
+      .coach-stats {
+        margin-top: 1.5rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.7rem;
+      }
+      @media (max-width: 700px) { .coach-stats { grid-template-columns: repeat(2, 1fr); } }
+      .stat-card {
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.16);
+        background: rgba(7,26,61,0.78);
+        padding: 1rem 0.7rem 0.9rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .stat-card svg { width: 30px; height: 30px; stroke: var(--orange-400); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+      .stat-card .stat-stars { display: flex; gap: 2px; }
+      .stat-card .stat-stars svg { width: 22px; height: 22px; fill: var(--orange-400); stroke: var(--orange-400); }
+      .stat-big {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.9rem;
+        line-height: 1;
+        color: #fff;
+      }
+      .stat-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.88rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--blue-300);
+      }
+      .stat-sub { font-size: 0.8rem; line-height: 1.35; color: rgba(255,255,255,0.66); }
+
+      /* logo timeline: the career told by team marks, one line per stop */
+      .coach-section-title {
+        margin: 2.1rem 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.55rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      .coach-section-title span { color: var(--orange-400); }
+      .timeline {
+        position: relative;
+        margin-top: 1.2rem;
+        display: grid;
+        gap: 0.8rem;
+        text-align: left;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 45px;
+        top: 18px;
+        bottom: 18px;
+        width: 2px;
+        background: linear-gradient(180deg, var(--blue-500), var(--orange-500));
+        opacity: 0.55;
+      }
+      .tl-stop {
+        position: relative;
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 1rem;
+        align-items: center;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(7,26,61,0.72);
+        padding: 0.8rem 1rem 0.8rem 0.8rem;
+      }
+      .tl-disc {
+        width: 92px;
+        height: 92px;
+        border-radius: 50%;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        flex: none;
+      }
+      .tl-disc img { width: 100%; height: 100%; object-fit: contain; padding: 7px; }
+      .tl-disc.gold { background: #fdf6e0; box-shadow: 0 0 0 2px #e8b93c, 0 8px 20px rgba(0,0,0,0.4); }
+      .tl-years {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 0.92rem;
+        letter-spacing: 0.22em;
+        color: var(--orange-400);
+      }
+      .tl-team {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        line-height: 1.05;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #fff;
+        margin-top: 0.1rem;
+      }
+      .tl-line { margin-top: 0.25rem; font-size: 0.95rem; line-height: 1.45; color: rgba(255,255,255,0.85); }
+      .tl-badges { margin-top: 0.45rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+      .tl-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.28rem 0.6rem;
+        border-radius: 999px;
+        background: rgba(255,122,26,0.16);
+        border: 1px solid rgba(255,160,60,0.45);
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--orange-400);
+      }
+      .tl-badge svg { width: 13px; height: 13px; stroke: var(--orange-400); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      @media (max-width: 480px) {
+        .tl-stop { grid-template-columns: 74px 1fr; gap: 0.8rem; }
+        .tl-disc { width: 74px; height: 74px; }
+        .timeline::before { left: 36px; }
+        .tl-team { font-size: 1.3rem; }
+      }
+
+      /* coaching: two logo cards side by side */
+      .coach-duo {
+        margin-top: 1.2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        text-align: center;
+      }
+      @media (max-width: 700px) { .coach-duo { grid-template-columns: 1fr; } }
+      .coach-duo-card {
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(7,26,61,0.72);
+        padding: 1.3rem 1.1rem 1.15rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .coach-duo-card .tl-disc { width: 104px; height: 104px; }
+      .coach-duo-card .tl-disc img { padding: 6px; }
+      .linden-badge {
+        width: 104px;
+        height: 104px;
+        border-radius: 50%;
+        background: #101010;
+        border: 3px solid var(--orange-500);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        flex: none;
+      }
+      .linden-badge .lb-l {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 2.3rem;
+        line-height: 0.9;
+        color: var(--orange-500);
+      }
+      .linden-badge .lb-t {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.72rem;
+        letter-spacing: 0.34em;
+        text-indent: 0.34em;
+        color: #fff;
+      }
+      .duo-team {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.45rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #fff;
+        margin-top: 0.4rem;
+      }
+      .duo-role {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.92rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--orange-400);
+      }
+      .duo-line { font-size: 0.94rem; line-height: 1.5; color: rgba(255,255,255,0.85); max-width: 21rem; }
+      .coach-sources {
+        margin: 1.5rem 0 0;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        color: rgba(255,255,255,0.68);
+      }
+      .coach-sources a { color: var(--blue-300); text-underline-offset: 3px; }
+      .coach-sources a:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+      #coachBack {
+        margin-top: 1.5rem;
+        border: none;
+        border-radius: 999px;
+        padding: 0.8rem 1.9rem;
+        background: var(--orange-500);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        box-shadow: 0 10px 24px rgba(255,122,26,0.35);
+        transition: transform 0.15s ease, background 0.15s ease;
+      }
+      #coachBack:hover { background: #f56d0d; transform: translateY(-1px); }
+      #coachBack:active { transform: translateY(1px); }
+      #coachBack:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+
+      /* ---------- Shop (Shop section) ---------- */
+      /* App-style storefront modeled on the reference UI: a light
+         screen with a pill search bar, a Player Edition banner, a
+         two-column The Kit grid of white cards, a product detail
+         screen and a dark floating bottom nav. Prices stay
+         placeholders: every product reads Coming Soon, and the only
+         real figure is the +$50 custom name option. */
+      #shopView {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        color: #0a1e42;
+        background: #fff8f1;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+      }
+      #shopView.open { opacity: 1; pointer-events: auto; visibility: visible; transition: opacity 0.3s ease, visibility 0s; }
+      .shop-wrap {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: calc(4.25rem + 1.25rem) 1.1rem 7.5rem;
+      }
+      /* search bar: white pill with soft shadow, like the reference */
+      .shop-search {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: #fff;
+        border-radius: 999px;
+        padding: 0.35rem 0.5rem 0.35rem 1.05rem;
+        box-shadow: 0 8px 22px rgba(10, 30, 66, 0.1);
+        border: 1px solid rgba(10, 30, 66, 0.06);
+      }
+      .shop-search svg { flex: none; width: 20px; height: 20px; stroke: #8a94a6; fill: none; stroke-width: 2; stroke-linecap: round; }
+      .shop-search input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        background: none;
+        font-family: "Barlow", sans-serif;
+        font-size: 1rem;
+        color: #0a1e42;
+        min-height: 2.5rem;
+      }
+      .shop-search input::placeholder { color: #9aa3b2; }
+      .shop-search input:focus-visible { outline: none; }
+      .shop-search:focus-within { box-shadow: 0 8px 22px rgba(255, 122, 26, 0.25); border-color: rgba(255, 122, 26, 0.5); }
+      .shop-search-btn {
+        flex: none;
+        border: none;
+        border-radius: 999px;
+        background: var(--navy-900);
+        color: #fff;
+        width: 2.5rem;
+        height: 2.5rem;
+        min-height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .shop-search-btn svg { width: 18px; height: 18px; stroke: #fff; }
+      /* Player Edition banner */
+      .shop-banner {
+        margin-top: 1.1rem;
+        position: relative;
+        overflow: hidden;
+        border-radius: 22px;
+        background: linear-gradient(105deg, #ffe7cf 0%, #ffd9ae 55%, #ffc98f 100%);
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        align-items: center;
+        min-height: 150px;
+      }
+      .shop-banner-text { padding: 1.3rem 0.4rem 1.3rem 1.4rem; position: relative; z-index: 2; }
+      .shop-banner-kicker {
+        margin: 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.82rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #b35400;
+      }
+      .shop-banner-title {
+        margin: 0.25rem 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: clamp(1.9rem, 6vw, 2.7rem);
+        line-height: 0.95;
+        text-transform: uppercase;
+        color: var(--orange-500);
+      }
+      .shop-banner-title span { color: #0a1e42; display: block; }
+      .shop-banner-sub { margin: 0.45rem 0 0; font-size: 0.92rem; line-height: 1.45; color: rgba(10, 30, 66, 0.75); max-width: 15rem; }
+      .shop-banner-imgs { position: relative; height: 100%; min-height: 150px; }
+      .shop-banner-imgs img {
+        position: absolute;
+        bottom: -14px;
+        width: 56%;
+        max-width: 170px;
+        filter: drop-shadow(0 12px 16px rgba(10, 30, 66, 0.25));
+      }
+      .shop-banner-imgs img.b1 { right: 34%; transform: rotate(-5deg); }
+      .shop-banner-imgs img.b2 { right: 2%; transform: rotate(4deg); bottom: -20px; }
+      /* section head */
+      .shop-section-head {
+        margin-top: 1.6rem;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .shop-section-title {
+        margin: 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.65rem;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: #0a1e42;
+      }
+      .shop-section-title span { color: var(--orange-500); }
+      .shop-viewall {
+        border: none;
+        background: none;
+        min-height: 2.75rem;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--orange-500);
+        padding: 0.3rem 0.2rem;
+      }
+      .shop-viewall:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .shop-note {
+        margin: 0.9rem 0 0;
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.8rem 1rem;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 122, 26, 0.4);
+        background: #fff1e2;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #0a1e42;
+      }
+      .shop-note svg { flex: none; width: 22px; height: 22px; stroke: var(--orange-500); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+      .shop-note strong { color: #d95f06; }
+      .shop-empty {
+        margin: 1.4rem 0 0;
+        padding: 1.6rem 1rem;
+        text-align: center;
+        border-radius: 16px;
+        background: #fff;
+        color: rgba(10, 30, 66, 0.65);
+        font-size: 1rem;
+      }
+      /* product grid: two columns on phones like the reference */
+      .shop-grid {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+      }
+      @media (min-width: 760px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
+      @media (min-width: 1020px) { .shop-grid { grid-template-columns: repeat(4, 1fr); } }
+      .pcard {
+        position: relative;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 8px 20px rgba(10, 30, 66, 0.08);
+        padding: 0.55rem 0.55rem 0.85rem;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        border: 1px solid rgba(10, 30, 66, 0.04);
+      }
+      .pcard[hidden] { display: none; }
+      .pcard-media {
+        position: relative;
+        border-radius: 14px;
+        background: #f7f2ea;
+        aspect-ratio: 1;
+        overflow: hidden;
+        border: none;
+        padding: 0;
+        width: 100%;
+        cursor: pointer;
+      }
+      .pcard-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .pcard-media.set-media img { width: 50%; object-fit: cover; }
+      .pcard-media.set-media img.slot-r { left: 50%; }
+      .pcard-badge {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        z-index: 2;
+        padding: 0.22rem 0.55rem;
+        border-radius: 999px;
+        background: var(--navy-900);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      .fav-btn {
+        position: absolute;
+        top: 0.45rem;
+        right: 0.45rem;
+        z-index: 3;
+        width: 2.3rem;
+        height: 2.3rem;
+        min-height: 2.3rem;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 4px 10px rgba(10, 30, 66, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+      .fav-btn svg { width: 17px; height: 17px; stroke: #0a1e42; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .fav-btn[aria-pressed="true"] svg { fill: var(--orange-500); stroke: var(--orange-500); }
+      .fav-btn:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .pcard-info { padding: 0.65rem 0.3rem 0; display: flex; flex-direction: column; gap: 0.18rem; flex: 1; }
+      .pcard-cat {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.74rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #98a1b1;
+      }
+      .pcard-name {
+        margin: 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.22rem;
+        line-height: 1.05;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: #0a1e42;
+      }
+      .pcard-new {
+        align-self: flex-start;
+        padding: 0.16rem 0.55rem;
+        border-radius: 999px;
+        background: rgba(255, 122, 26, 0.14);
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.74rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #d95f06;
+      }
+      .stars .dim { color: #e3d9cb; }
+      .pcard-foot { margin-top: auto; padding-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+      .price-soon {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 0.98rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--orange-500);
+      }
+      .pcard-open {
+        flex: none;
+        width: 2.4rem;
+        height: 2.4rem;
+        min-height: 2.4rem;
+        border: none;
+        border-radius: 50%;
+        background: var(--orange-500);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        box-shadow: 0 6px 14px rgba(255, 122, 26, 0.35);
+      }
+      .pcard-open svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+      .pcard-open:focus-visible, .pcard-media:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      #shopBack {
+        margin-top: 1.75rem;
+        border: 1px solid rgba(10, 30, 66, 0.25);
+        border-radius: 999px;
+        padding: 0.8rem 1.9rem;
+        background: transparent;
+        color: #0a1e42;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        transition: background 0.15s ease;
+      }
+      #shopBack:hover { background: rgba(10, 30, 66, 0.06); }
+      #shopBack:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+
+      /* floating bottom nav, dark pill like the reference app */
+      #shopNav {
+        position: fixed;
+        left: 50%;
+        bottom: max(0.9rem, env(safe-area-inset-bottom));
+        transform: translate(-50%, 140%);
+        z-index: 48;
+        width: min(430px, calc(100vw - 2rem));
+        background: var(--navy-900);
+        border-radius: 999px;
+        box-shadow: 0 18px 34px rgba(4, 18, 43, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0.45rem 0.6rem;
+        display: none;
+      }
+      #shopView.open ~ #shopNav {
+        display: flex;
+        animation: shopnav-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes shopnav-in {
+        from { transform: translate(-50%, 140%); }
+        to { transform: translate(-50%, 0); }
+      }
+      .shopnav-btn {
+        position: relative;
+        width: 3rem;
+        height: 3rem;
+        min-height: 3rem;
+        border: none;
+        border-radius: 50%;
+        background: none;
+        color: rgba(255, 255, 255, 0.65);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+      .shopnav-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+      .shopnav-btn.active { background: var(--orange-500); color: #fff; box-shadow: 0 8px 18px rgba(255, 122, 26, 0.4); }
+      .shopnav-btn[aria-pressed="true"] { color: var(--orange-400); }
+      .shopnav-btn[aria-pressed="true"] svg { fill: var(--orange-500); stroke: var(--orange-500); }
+      .shopnav-btn:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .shopnav-badge {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        min-width: 1.15rem;
+        height: 1.15rem;
+        padding: 0 0.25rem;
+        border-radius: 999px;
+        background: var(--orange-500);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 0.72rem;
+        line-height: 1.15rem;
+        text-align: center;
+      }
+      .shopnav-badge[hidden] { display: none; }
+
+      /* product detail screen, modeled on the reference detail phone */
+      #detailView {
+        position: fixed;
+        inset: 0;
+        z-index: 46;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        background: #fff8f1;
+        color: #0a1e42;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+      }
+      #detailView.open { opacity: 1; pointer-events: auto; visibility: visible; transition: opacity 0.28s ease, visibility 0s; }
+      .detail-wrap { max-width: 560px; margin: 0 auto; padding: calc(4.25rem + 1rem) 1.1rem 7.5rem; }
+      .detail-topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+      .detail-icon-btn {
+        width: 2.75rem;
+        height: 2.75rem;
+        border: none;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 6px 16px rgba(10, 30, 66, 0.1);
+        color: #0a1e42;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+      .detail-icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .detail-icon-btn:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .detail-topbar-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #98a1b1;
+      }
+      .detail-media {
+        position: relative;
+        margin-top: 1rem;
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 14px 30px rgba(10, 30, 66, 0.1);
+        aspect-ratio: 1;
+        overflow: hidden;
+      }
+      .detail-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.25s ease; }
+      .detail-media img.on { opacity: 1; }
+      .detail-media.set-media { aspect-ratio: 4 / 3; }
+      .detail-media.set-media img { width: 50%; object-fit: cover; }
+      .detail-media.set-media img.slot-r { left: 50%; }
+      .detail-thumbs { margin-top: 0.8rem; display: flex; gap: 0.6rem; justify-content: center; }
+      .detail-thumb {
+        width: 64px;
+        height: 64px;
+        min-height: 64px;
+        border-radius: 14px;
+        border: 2px solid transparent;
+        background: #fff;
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 6px 14px rgba(10, 30, 66, 0.08);
+      }
+      .detail-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .detail-thumb[aria-pressed="true"] { border-color: var(--orange-500); }
+      .detail-thumb:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .detail-name {
+        margin: 1.2rem 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 2.1rem;
+        line-height: 1;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: #0a1e42;
+      }
+      .detail-meta { margin-top: 0.45rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+      .detail-meta .stars { font-size: 0.9rem; }
+      .detail-meta-note { font-size: 0.88rem; color: #98a1b1; }
+      .detail-desc { margin: 0.7rem 0 0; font-size: 1rem; line-height: 1.55; color: rgba(10, 30, 66, 0.78); }
+      .detail-label {
+        margin: 1.15rem 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #98a1b1;
+      }
+      .pill-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.55rem; }
+      .pill {
+        min-height: 2.6rem;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        border: 1.5px solid rgba(10, 30, 66, 0.16);
+        background: #fff;
+        color: #0a1e42;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      }
+      .pill:hover { border-color: rgba(10, 30, 66, 0.4); }
+      .pill[aria-pressed="true"] { background: var(--navy-900); border-color: transparent; color: #fff; }
+      .pill.size-pill { width: 3rem; padding-left: 0; padding-right: 0; text-align: center; border-radius: 50%; }
+      .pill.size-pill[aria-pressed="true"] { background: var(--orange-500); }
+      .pill:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .swatch { display: inline-flex; align-items: center; gap: 0.45rem; }
+      .swatch i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(10, 30, 66, 0.25); flex: none; }
+      .custom-fields { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.6rem; }
+      .custom-fields[hidden] { display: none; }
+      .custom-fields input {
+        width: 100%;
+        min-height: 2.9rem;
+        padding: 0.6rem 0.9rem;
+        border-radius: 12px;
+        border: 1.5px solid rgba(10, 30, 66, 0.2);
+        background: #fff;
+        color: #0a1e42;
+        font-family: "Barlow", sans-serif;
+        font-size: 1rem;
+      }
+      .custom-fields input::placeholder { color: #9aa3b2; }
+      .custom-fields input:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 2px; }
+      .custom-preview { margin: 0; font-size: 0.92rem; line-height: 1.45; color: rgba(10, 30, 66, 0.75); }
+      .custom-preview strong { color: var(--orange-500); text-transform: uppercase; letter-spacing: 0.06em; }
+      .detail-buy {
+        margin-top: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .qty {
+        display: flex;
+        align-items: center;
+        gap: 0.15rem;
+        background: #fff;
+        border: 1.5px solid rgba(10, 30, 66, 0.14);
+        border-radius: 999px;
+        padding: 0.25rem;
+      }
+      .qty button {
+        width: 2.4rem;
+        height: 2.4rem;
+        min-height: 2.4rem;
+        border: none;
+        border-radius: 50%;
+        background: none;
+        color: #0a1e42;
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 0;
+      }
+      .qty button:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 1px; }
+      .qty-val { min-width: 1.6rem; text-align: center; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 1.15rem; }
+      .detail-price { margin-left: auto; text-align: right; }
+      .detail-price .dp-label { display: block; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: #98a1b1; font-family: "Barlow Condensed", sans-serif; font-weight: 600; }
+      .detail-price .dp-value { font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 1.45rem; color: var(--orange-500); text-transform: uppercase; letter-spacing: 0.04em; }
+      .detail-cta {
+        margin-top: 1rem;
+        width: 100%;
+        border: none;
+        border-radius: 999px;
+        padding: 1rem 1.2rem;
+        background: var(--orange-500);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        box-shadow: 0 14px 26px rgba(255, 122, 26, 0.35);
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+
+      .sr-only {
+        position: absolute;
+        width: 1px; height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .waves .w1, .waves .w2 { animation: none; }
+        #siteHeader { transition: none; }
+        .enter-zone.dribbling #enterBounce,
+        .enter-zone.dribbling #enterSquash,
+        .enter-zone.dribbling .enter-shadow { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Home: the main page is the mailing list signup -->
+    <main id="home">
+      <img src="assets/asset-01.png" alt="The Virginia Legacy crest" />
+      <h1>The Virginia Legacy</h1>
+      <p>Women's Basketball</p>
+      <form class="mail-form" id="mailForm" novalidate>
+        <h2>Join our mailing list</h2>
+        <p class="mail-sub">Legacy news, ticket drops and shop releases, straight to your inbox.</p>
+        <div class="mail-row">
+          <label class="sr-only" for="mailEmail">Email address</label>
+          <input id="mailEmail" type="email" name="email" placeholder="Email address" autocomplete="email" inputmode="email" />
+          <button id="mailSubmit" type="submit">Join</button>
+        </div>
+        <p class="mail-error" id="mailError" role="alert" hidden>Please enter a valid email address.</p>
+        <p class="mail-done" id="mailDone" hidden>You&rsquo;re on the list. Welcome to the Legacy.</p>
+      </form>
+    </main>
+
+    <!-- Site header: hidden on the loading screen, appears once the
+         visitor presses Enter and stays on top of every screen after
+         that (ad, home, coming soon) so the hamburger menu is always
+         reachable -->
+    <header id="siteHeader">
+      <button id="brandBtn" type="button" aria-label="Back to the Virginia Legacy home screen">
+        <img src="assets/asset-01.png" alt="" />
+        <span>Virginia Legacy</span>
+      </button>
+      <button id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <span class="bar-line"></span>
+        <span class="bar-line"></span>
+        <span class="bar-line"></span>
+      </button>
+    </header>
+    <div id="navScrim"></div>
+    <nav id="navPanel" aria-label="Site sections" aria-hidden="true">
+      <p class="nav-heading">Virginia Legacy</p>
+      <button class="nav-link" type="button" data-section="team">Team <span class="chev" aria-hidden="true">›</span></button>
+      <button class="nav-link" type="button" data-section="coaches">Coaches <span class="chev" aria-hidden="true">›</span></button>
+      <button class="nav-link" type="button" data-section="tickets">Tickets <span class="chev" aria-hidden="true">›</span></button>
+      <button class="nav-link" type="button" data-section="shop">Shop <span class="chev" aria-hidden="true">›</span></button>
+    </nav>
+
+    <!-- Coach spotlight: Tamecka Dixon (Coaches section) -->
+    <section id="coachView" aria-hidden="true" aria-labelledby="coachName">
+      <div class="coach-wrap">
+        <p class="coach-kicker">Coaches &mdash; Spotlight</p>
+        <h2 class="coach-name" id="coachName">Tamecka Dixon</h2>
+        <p class="coach-role">Head Coach &bull; Kansas &rsquo;97 &bull; WNBA 1997&ndash;2009</p>
+
+        <div class="coach-photos">
+          <figure class="coach-photo-profile">
+            <img src="assets/asset-06.jpg" alt="Tamecka Dixon in a Linden Basketball sweatshirt holding a basketball in front of a brick wall" width="1000" height="667" loading="lazy" />
+            <figcaption>Dixon in her Linden Basketball sweatshirt, back home coaching at her alma mater.</figcaption>
+          </figure>
+        </div>
+
+        <p class="coach-intro">A guard who helped launch the WNBA in its very first season, Dixon won back-to-back titles with the Los Angeles Sparks, earned three straight All-Star selections, and wore USA gold &mdash; then came home to coach, taking over the girls&rsquo; program at Linden High School, the school where her own jersey is retired.</p>
+
+        <div class="coach-stats" aria-label="Career highlights at a glance">
+          <div class="stat-card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <span class="stat-big">2&times;</span>
+            <span class="stat-label">WNBA Champion</span>
+            <span class="stat-sub">Sparks &middot; 2001 &amp; 2002</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+            </span>
+            <span class="stat-big">3&times;</span>
+            <span class="stat-label">WNBA All-Star</span>
+            <span class="stat-sub">2001 &middot; 2002 &middot; 2003</span>
+          </div>
+          <div class="stat-card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
+            <span class="stat-big">13</span>
+            <span class="stat-label">WNBA Seasons</span>
+            <span class="stat-sub">360 games &middot; 9.7 PPG</span>
+          </div>
+          <div class="stat-card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
+            <span class="stat-big">Gold</span>
+            <span class="stat-label">Team USA</span>
+            <span class="stat-sub">2002 Worlds &middot; China</span>
+          </div>
+        </div>
+
+        <h3 class="coach-section-title">The <span>Journey</span></h3>
+        <div class="timeline">
+          <div class="tl-stop">
+            <div class="tl-disc"><img src="assets/asset-02.png" alt="University of Kansas KU logo" width="860" height="586" loading="lazy" /></div>
+            <div>
+              <p class="tl-years">1993 &ndash; 1997</p>
+              <p class="tl-team">Kansas Jayhawks</p>
+              <p class="tl-line">1,689 points &middot; Big 8 &amp; Big 12 Player of the Year &middot; Kodak All-American</p>
+            </div>
+          </div>
+          <div class="tl-stop">
+            <div class="tl-disc"><img src="assets/asset-03.png" alt="Los Angeles Sparks logo" width="1200" height="1200" loading="lazy" /></div>
+            <div>
+              <p class="tl-years">1997 &ndash; 2005</p>
+              <p class="tl-team">Los Angeles Sparks</p>
+              <p class="tl-line">Drafted 14th overall in the WNBA&rsquo;s first season &middot; nine seasons in LA</p>
+              <div class="tl-badges">
+                <span class="tl-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg> Champions &middot; 2001</span>
+                <span class="tl-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg> Champions &middot; 2002</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-stop">
+            <div class="tl-disc gold"><img src="assets/asset-04.png" alt="USA Basketball logo" width="446" height="511" loading="lazy" /></div>
+            <div>
+              <p class="tl-years">2002</p>
+              <p class="tl-team">Team USA</p>
+              <p class="tl-line">Gold at the FIBA World Championship in China &middot; 9&ndash;0</p>
+            </div>
+          </div>
+          <div class="tl-stop">
+            <div class="tl-disc"><img src="assets/asset-05.png" alt="Houston Comets logo" width="408" height="408" loading="lazy" /></div>
+            <div>
+              <p class="tl-years">2006 &ndash; 2008</p>
+              <p class="tl-team">Houston Comets</p>
+              <p class="tl-line">Three seasons in Houston</p>
+            </div>
+          </div>
+          <div class="tl-stop">
+            <div class="tl-disc"><img src="assets/asset-06.png" alt="Indiana Fever logo" width="905" height="860" loading="lazy" /></div>
+            <div>
+              <p class="tl-years">2009</p>
+              <p class="tl-team">Indiana Fever</p>
+              <p class="tl-line">Final season &middot; WNBA Finals run</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="coach-section-title">Now <span>Coaching</span></h3>
+        <div class="coach-duo">
+          <div class="coach-duo-card">
+            <div class="linden-badge" role="img" aria-label="Linden Tigers monogram badge"><span class="lb-l">L</span><span class="lb-t">Tigers</span></div>
+            <p class="duo-team">Linden High School</p>
+            <p class="duo-role">Head Coach &middot; 2024 &ndash; Present</p>
+            <p class="duo-line">Back home at her alma mater in New Jersey, where her jersey is retired.</p>
+          </div>
+          <div class="coach-duo-card">
+            <div class="tl-disc"><img src="assets/asset-01.png" alt="The Virginia Legacy crest" width="1254" height="1254" loading="lazy" /></div>
+            <p class="duo-team">Virginia Legacy</p>
+            <p class="duo-role">Head Coach</p>
+            <p class="duo-line">Leading the Legacy at the WPBIT, April 5&ndash;9, 2027 &middot; Boo Williams Sportsplex.</p>
+          </div>
+        </div>
+
+        <p class="coach-sources">Sources: <a href="https://www.wnba.com/player/100008/tamecka-dixon/profile" target="_blank" rel="noopener">WNBA player profile</a> &middot; <a href="https://www2.kusports.com/sports/college/basketball-women/2025/sep/23/ku-legend-dixon-shaping-girls-basketball-program-at-high-school-alma-mater/" target="_blank" rel="noopener">KU Sports, &ldquo;KU legend Dixon shaping girls basketball program&rdquo;</a> &middot; <a href="https://en.wikipedia.org/wiki/Tamecka_Dixon" target="_blank" rel="noopener">Career record</a></p>
+
+        <figure class="coach-photo-bottom">
+          <img src="assets/asset-07.jpg" alt="Coach Tamecka Dixon in a Linden Basketball shirt leading a locker-room huddle with her players in orange practice jerseys" width="749" height="500" loading="lazy" />
+          <figcaption>Dixon leading her team in the locker room at Linden High School, her alma mater in New Jersey. Photo: KU Sports.</figcaption>
+        </figure>
+
+        <button id="coachBack" type="button">Back to home</button>
+      </div>
+    </section>
+
+    <!-- Shop: app-style storefront modeled on the reference UI.
+         Search bar, Player Edition banner, The Kit grid, product
+         detail screen and a floating bottom nav. Prices are
+         placeholders (Coming Soon); jerseys and sets can add a
+         custom back name for +$50 -->
+    <section id="shopView" aria-hidden="true" aria-labelledby="shopTitle">
+      <div class="shop-wrap">
+        <h2 class="sr-only" id="shopTitle">The Shop</h2>
+
+        <div class="shop-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+          <input id="shopSearch" type="search" placeholder="Search jerseys, shorts, hoodies" aria-label="Search the shop" />
+          <button class="shop-search-btn" id="shopSearchBtn" type="button" aria-label="Focus search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10m-7 6h4"/></svg>
+          </button>
+        </div>
+
+        <div class="shop-banner">
+          <div class="shop-banner-text">
+            <p class="shop-banner-kicker">Official Kit</p>
+            <p class="shop-banner-title">Player <span>Edition</span></p>
+            <p class="shop-banner-sub">The Legacy game kit: navy and white, on court and off.</p>
+          </div>
+          <div class="shop-banner-imgs" aria-hidden="true">
+            <img class="b1" src="assets/asset-08.jpg" alt="" width="1254" height="1254" loading="lazy" />
+            <img class="b2" src="assets/asset-09.jpg" alt="" width="1254" height="1254" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="shop-section-head">
+          <h3 class="shop-section-title">The <span>Kit</span></h3>
+          <button class="shop-viewall" id="shopViewAll" type="button">View All</button>
+        </div>
+
+        <p class="shop-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="0.5" fill="currentColor"/></svg>
+          <span><strong>Make it yours:</strong> add your own name to the back of any jersey or set for <strong>+$50</strong>. It replaces the SAMPLE nameplate shown in the photos.</span>
+        </p>
+
+        <div class="shop-grid" id="shopGrid">
+          <article class="pcard" data-id="navy-jersey" data-search="navy jersey kit">
+            <button class="pcard-media" type="button" data-open-detail aria-label="View the Navy Jersey">
+              <span class="pcard-badge">Jersey</span>
+              <img src="assets/asset-08.jpg" alt="Navy Virginia Legacy jersey, front: LEGACY across the chest over number 3, orange trim" width="1254" height="1254" loading="lazy" />
+            </button>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Save the Navy Jersey to favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+            <div class="pcard-info">
+              <span class="pcard-cat">Jersey</span>
+              <h4 class="pcard-name">Navy Jersey</h4>
+              <span class="pcard-new">New</span>
+              <div class="pcard-foot">
+                <span class="price-soon">Coming Soon</span>
+                <button class="pcard-open" type="button" data-open-detail aria-label="Open the Navy Jersey"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard" data-id="white-jersey" data-search="white jersey kit">
+            <button class="pcard-media" type="button" data-open-detail aria-label="View the White Jersey">
+              <span class="pcard-badge">Jersey</span>
+              <img src="assets/asset-09.jpg" alt="White Virginia Legacy jersey, front: LEGACY in navy across the chest over number 3, orange trim" width="1254" height="1254" loading="lazy" />
+            </button>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Save the White Jersey to favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+            <div class="pcard-info">
+              <span class="pcard-cat">Jersey</span>
+              <h4 class="pcard-name">White Jersey</h4>
+              <span class="pcard-new">New</span>
+              <div class="pcard-foot">
+                <span class="price-soon">Coming Soon</span>
+                <button class="pcard-open" type="button" data-open-detail aria-label="Open the White Jersey"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard" data-id="navy-shorts" data-search="navy shorts kit">
+            <button class="pcard-media" type="button" data-open-detail aria-label="View the Navy Shorts">
+              <span class="pcard-badge">Shorts</span>
+              <img src="assets/asset-10.jpg" alt="Navy Virginia Legacy shorts, front: navy with white and orange side panels" width="1254" height="1254" loading="lazy" />
+            </button>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Save the Navy Shorts to favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+            <div class="pcard-info">
+              <span class="pcard-cat">Shorts</span>
+              <h4 class="pcard-name">Navy Shorts</h4>
+              <span class="pcard-new">New</span>
+              <div class="pcard-foot">
+                <span class="price-soon">Coming Soon</span>
+                <button class="pcard-open" type="button" data-open-detail aria-label="Open the Navy Shorts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard" data-id="white-shorts" data-search="white shorts kit">
+            <button class="pcard-media" type="button" data-open-detail aria-label="View the White Shorts">
+              <span class="pcard-badge">Shorts</span>
+              <img src="assets/asset-11.jpg" alt="White Virginia Legacy shorts, front: white with navy and orange side panels" width="1254" height="1254" loading="lazy" />
+            </button>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Save the White Shorts to favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+            <div class="pcard-info">
+              <span class="pcard-cat">Shorts</span>
+              <h4 class="pcard-name">White Shorts</h4>
+              <span class="pcard-new">New</span>
+              <div class="pcard-foot">
+                <span class="price-soon">Coming Soon</span>
+                <button class="pcard-open" type="button" data-open-detail aria-label="Open the White Shorts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard" data-id="navy-set" data-search="navy full set jersey shorts kit">
+            <button class="pcard-media set-media" type="button" data-open-detail aria-label="View the Navy Full Set">
+              <span class="pcard-badge">Full Set</span>
+              <img src="assets/asset-08.jpg" alt="Navy Full Set: navy jersey front" width="1254" height="1254" loading="lazy" />
+              <img class="slot-r" src="assets/asset-10.jpg" alt="Navy Full Set: navy shorts front" width="1254" height="1254" loading="lazy" />
+            </button>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Save the Navy Full Set to favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+            <div class="pcard-info">
+              <span class="pcard-cat">Full Set</span>
+              <h4 class="pcard-name">Navy Full Set</h4>
+              <span class="pcard-new">New</span>
+              <div class="pcard-foot">
+                <span class="price-soon">Coming Soon</span>
+                <button class="pcard-open" type="button" data-open-detail aria-label="Open the Navy Full Set"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard" data-id="white-set" data-search="white full set jersey shorts kit">
+            <button class="pcard-media set-media" type="button" data-open-detail aria-label="View the White Full Set">
+              <span class="pcard-badge">Full Set</span>
+              <img src="assets/asset-09.jpg" alt="White Full Set: white jersey front" width="1254" height="1254" loading="lazy" />
+              <img class="slot-r" src="assets/asset-11.jpg" alt="White Full Set: white shorts front" width="1254" height="1254" loading="lazy" />
+            </button>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Save the White Full Set to favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+            <div class="pcard-info">
+              <span class="pcard-cat">Full Set</span>
+              <h4 class="pcard-name">White Full Set</h4>
+              <span class="pcard-new">New</span>
+              <div class="pcard-foot">
+                <span class="price-soon">Coming Soon</span>
+                <button class="pcard-open" type="button" data-open-detail aria-label="Open the White Full Set"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard" data-id="hoodie" data-search="hoodie crest legacy sweatshirt">
+            <button class="pcard-media" type="button" data-open-detail aria-label="View the Legacy Crest Hoodie">
+              <span class="pcard-badge">Hoodie</span>
+              <img src="assets/asset-12.jpg" alt="White Legacy hoodie with the full-color Virginia Legacy crest on the chest" width="1254" height="1254" loading="lazy" />
+            </button>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Save the Legacy Crest Hoodie to favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+            <div class="pcard-info">
+              <span class="pcard-cat">Hoodie</span>
+              <h4 class="pcard-name">Legacy Crest Hoodie</h4>
+              <span class="pcard-new">New</span>
+              <div class="pcard-foot">
+                <span class="price-soon">Coming Soon</span>
+                <button class="pcard-open" type="button" data-open-detail aria-label="Open the Legacy Crest Hoodie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <p class="shop-empty" id="shopEmpty" hidden>No gear matches that search yet. Try jersey, shorts, set or hoodie.</p>
+
+        <button id="shopBack" type="button">Back to home</button>
+      </div>
+    </section>
+
+    <!-- Floating bottom nav for the shop, shown while the shop is open -->
+    <nav id="shopNav" aria-label="Shop">
+      <button class="shopnav-btn" id="shopNavHome" type="button" aria-label="Back to home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22v-8h6v8"/></svg>
+      </button>
+      <button class="shopnav-btn active" id="shopNavShop" type="button" aria-label="Shop, current section">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </button>
+      <button class="shopnav-btn" id="shopNavSearch" type="button" aria-label="Search the shop">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="shopnav-btn" id="shopNavFav" type="button" aria-pressed="false" aria-label="Show favorites only">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span class="shopnav-badge" id="favBadge" hidden>0</span>
+      </button>
+    </nav>
+
+    <!-- Product detail screen, filled in by script from the catalog -->
+    <section id="detailView" aria-hidden="true" aria-labelledby="detailName">
+      <div class="detail-wrap">
+        <div class="detail-topbar">
+          <button class="detail-icon-btn" id="detailBack" type="button" aria-label="Back to the shop">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg>
+          </button>
+          <span class="detail-topbar-title">Legacy Shop</span>
+          <button class="detail-icon-btn" id="detailFav" type="button" aria-pressed="false" aria-label="Save this product to favorites">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          </button>
+        </div>
+
+        <div class="detail-media" id="detailMedia"></div>
+        <div class="detail-thumbs" id="detailThumbs"></div>
+
+        <h3 class="detail-name" id="detailName">Product</h3>
+        <div class="detail-meta">
+          <span class="detail-meta-note">Official Legacy kit &middot; Player Edition</span>
+        </div>
+        <p class="detail-desc" id="detailDesc"></p>
+
+        <div id="detailViewOpts">
+          <p class="detail-label" id="detailViewLabel">View</p>
+          <div class="pill-row" role="group" aria-labelledby="detailViewLabel" id="detailViewRow"></div>
+        </div>
+
+        <div id="detailColorOpts" hidden>
+          <p class="detail-label" id="detailColorLabel">Color</p>
+          <div class="pill-row" role="group" aria-labelledby="detailColorLabel" id="detailColorRow"></div>
+        </div>
+
+        <p class="detail-label" id="detailSizeLabel">Size</p>
+        <div class="pill-row" role="group" aria-labelledby="detailSizeLabel" id="detailSizeRow"></div>
+
+        <div id="detailCustom" hidden>
+          <p class="detail-label">Back name</p>
+          <div class="pill-row">
+            <button class="pill" id="detailCustomPill" type="button" aria-pressed="false">Add your name &middot; +$50</button>
+          </div>
+          <div class="custom-fields" id="detailCustomFields" hidden>
+            <input id="detailCustomName" type="text" maxlength="14" placeholder="Name for the back" aria-label="Name to print on the back" />
+            <p class="custom-preview" id="detailCustomPreview" hidden>Back reads: <strong id="detailPreviewName"></strong> &middot; +$50</p>
+          </div>
+        </div>
+
+        <div class="detail-buy">
+          <div class="qty" aria-label="Quantity">
+            <button type="button" id="qtyMinus" aria-label="Decrease quantity">&minus;</button>
+            <span class="qty-val" id="qtyVal">1</span>
+            <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="detail-price">
+            <span class="dp-label">Price</span>
+            <span class="dp-value">Coming Soon</span>
+          </div>
+        </div>
+        <button class="detail-cta" type="button" disabled>Add to Cart &middot; Coming Soon</button>
+      </div>
+    </section>
+
+    <!-- Coming soon view for each section -->
+    <section id="soonView" aria-hidden="true">
+      <p class="soon-kicker">Coming Soon</p>
+      <h2 id="soonTitle">Team</h2>
+      <p class="soon-line" id="soonLine">This section is on its way. Check back soon.</p>
+      <button id="soonBack" type="button">Back to home</button>
+    </section>
+
+    <!-- Loading experience -->
+    <section id="loader" aria-label="Loading">
+      <svg class="court" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+        <circle cx="300" cy="300" r="150" stroke="#ffffff" stroke-opacity="0.07" stroke-width="2" />
+        <circle cx="300" cy="300" r="4" fill="#ffffff" fill-opacity="0.07" />
+        <path d="M40 470 A 330 330 0 0 1 560 470" stroke="#ffffff" stroke-opacity="0.05" stroke-width="2" />
+        <line x1="300" y1="0" x2="300" y2="600" stroke="#ffffff" stroke-opacity="0.04" stroke-width="2" />
+      </svg>
+
+      <div class="stage">
+        <div id="logoBounce">
+          <div id="logoClip">
+            <div id="logoSquash">
+              <img id="logoImg" src="assets/asset-01.png" alt="The Virginia Legacy women's basketball crest: a basketball rising over ocean waves above the word Legacy, with a pier, sunset and lighthouse" />
+            </div>
+          </div>
+        </div>
+        <div class="shadow" id="shadow"></div>
+        <div id="rings"></div>
+      </div>
+
+      <div class="wordmark" id="wordmark" aria-hidden="true">
+        <span class="rule"></span>
+        <span id="wmLetters"></span>
+        <span class="rule"></span>
+      </div>
+
+      <div class="load-ui" id="loadUi">
+        <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+        <div class="load-meta"><span>Loading</span><span id="pct">0%</span></div>
+      </div>
+
+      <div class="enter-zone" id="enterZone">
+        <div id="enterBounce">
+          <div id="enterSquash">
+            <button id="enterBtn" type="button" aria-label="Enter The Virginia Legacy">
+              <img src="assets/asset-07.png" alt="" width="512" height="512" />
+            </button>
+          </div>
+        </div>
+        <div class="enter-shadow" id="enterShadow"></div>
+        <p class="enter-hint">Tap the ball to enter</p>
+      </div>
+
+      <div class="waves" aria-hidden="true">
+        <svg class="w1" viewBox="0 0 2880 120" preserveAspectRatio="none">
+          <path d="M0 70 Q 90 40 180 70 T 360 70 T 540 70 T 720 70 T 900 70 T 1080 70 T 1260 70 T 1440 70 T 1620 70 T 1800 70 T 1980 70 T 2160 70 T 2340 70 T 2520 70 T 2700 70 T 2880 70 L2880 120 L0 120 Z" fill="#2e9bff" />
+        </svg>
+        <svg class="w2" viewBox="0 0 2880 120" preserveAspectRatio="none">
+          <path d="M0 88 Q 120 62 240 88 T 480 88 T 720 88 T 960 88 T 1200 88 T 1440 88 T 1680 88 T 1920 88 T 2160 88 T 2400 88 T 2640 88 T 2880 88 L2880 120 L0 120 Z" fill="#57b6ff" />
+        </svg>
+      </div>
+
+      <button id="skipBtn" type="button">Skip intro</button>
+      <p class="sr-only" role="status" id="srStatus">Loading The Virginia Legacy</p>
+    </section>
+
+    <!-- Fullscreen video ad, shown once the visitor enters -->
+    <section id="ad" class="gone" aria-label="Advertisement">
+      <video id="adVideo" playsinline preload="auto"></video>
+      <span class="ad-tag" aria-hidden="true">Ad</span>
+      <!-- the Skip button is created by script when the ad opens,
+           and removed again when it closes -->
+    </section>
+
+    <script>
+      (function () {
+        var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var hasMotion = !!(window.Motion && typeof window.Motion.animate === "function");
+
+        var loader = document.getElementById("loader");
+        var bounceEl = document.getElementById("logoBounce");
+        var clipEl = document.getElementById("logoClip");
+        var squashEl = document.getElementById("logoSquash");
+        var shadowEl = document.getElementById("shadow");
+        var ringsEl = document.getElementById("rings");
+        var wordmark = document.getElementById("wordmark");
+        var wmLetters = document.getElementById("wmLetters");
+        var loadUi = document.getElementById("loadUi");
+        var barFill = document.getElementById("barFill");
+        var pct = document.getElementById("pct");
+        var srStatus = document.getElementById("srStatus");
+        var enterZone = document.getElementById("enterZone");
+        var enterBounceEl = document.getElementById("enterBounce");
+        var enterSquashEl = document.getElementById("enterSquash");
+        var enterShadow = document.getElementById("enterShadow");
+        var enterBtn = document.getElementById("enterBtn");
+        var skipBtn = document.getElementById("skipBtn");
+        var homeFocus = document.getElementById("mailEmail");
+        var adEl = document.getElementById("ad");
+        var adVideo = document.getElementById("adVideo");
+        var skipAdBtn = null; // created on demand while the ad is open
+
+        // Build wordmark letters for the stagger
+        "WOMEN'S BASKETBALL".split("").forEach(function (c) {
+          var s = document.createElement("span");
+          s.className = "ch";
+          s.textContent = c === " " ? "\u00A0" : c;
+          wmLetters.appendChild(s);
+        });
+        var chEls = wordmark.querySelectorAll(".ch");
+        var ruleEls = wordmark.querySelectorAll(".rule");
+
+        var timers = [];
+        var rafId = null;
+        var running = false;
+        var finished = false;
+
+        function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+        function clearTimers() { timers.forEach(clearTimeout); timers = []; if (rafId) cancelAnimationFrame(rafId); }
+
+        function spawnRing(hot) {
+          var r = document.createElement("span");
+          r.className = "ring" + (hot ? " hot" : "");
+          ringsEl.appendChild(r);
+          setTimeout(function () { r.remove(); }, 750);
+        }
+
+        /* PHY-027 dribble settle bounce: descending heights, gravity easing */
+        function playBounce(done) {
+          var D = Math.min(window.innerHeight * 0.44, 400);
+          var dur = 1900;
+          var frac = [-1, 0, -0.36, 0, -0.16, 0, -0.055, 0];
+          var times = [0, 0.36, 0.55, 0.70, 0.81, 0.90, 0.96, 1];
+          var ys = frac.map(function (f) { return f * D; });
+          var bez = function (a) { return "cubic-bezier(" + a.join(",") + ")"; };
+          var fall = [0.55, 0.06, 0.68, 0.19], rise = [0.25, 0.46, 0.45, 0.94];
+          var segEase = [fall, rise, fall, rise, fall, rise, fall];
+
+          // squash & stretch on the crest itself
+          squashEl.animate([
+            { transform: "scale(0.97, 1.05)", offset: 0 },
+            { transform: "scale(0.96, 1.07)", offset: 0.18 },
+            { transform: "scale(0.99, 1.01)", offset: 0.33 },
+            { transform: "scale(1.17, 0.78)", offset: 0.36 },
+            { transform: "scale(0.96, 1.05)", offset: 0.42 },
+            { transform: "scale(1, 1)", offset: 0.55 },
+            { transform: "scale(1.01, 0.99)", offset: 0.67 },
+            { transform: "scale(1.11, 0.85)", offset: 0.70 },
+            { transform: "scale(0.98, 1.03)", offset: 0.75 },
+            { transform: "scale(1, 1)", offset: 0.81 },
+            { transform: "scale(1.07, 0.90)", offset: 0.90 },
+            { transform: "scale(0.99, 1.01)", offset: 0.94 },
+            { transform: "scale(1.03, 0.96)", offset: 0.96 },
+            { transform: "scale(1, 1)", offset: 1 }
+          ], { duration: dur, fill: "forwards" });
+
+          // floor shadow tracks the height
+          shadowEl.animate([
+            { transform: "scaleX(0.45)", opacity: 0.16, offset: 0, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 0.36, easing: bez(rise) },
+            { transform: "scaleX(0.62)", opacity: 0.27, offset: 0.55, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 0.70, easing: bez(rise) },
+            { transform: "scaleX(0.78)", opacity: 0.36, offset: 0.81, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 0.90, easing: bez(rise) },
+            { transform: "scaleX(0.9)", opacity: 0.44, offset: 0.96, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 1 }
+          ], { duration: dur, fill: "forwards" });
+
+          // impact rings on each floor contact
+          [0.36, 0.70, 0.90, 1].forEach(function (t, i, arr) {
+            later(function () { spawnRing(i === arr.length - 1); }, t * dur);
+          });
+
+          if (hasMotion) {
+            var ctrl = window.Motion.animate(bounceEl, { y: ys }, {
+              duration: dur / 1000,
+              times: times,
+              ease: segEase
+            });
+            var p = (ctrl && ctrl.finished) ? ctrl.finished : Promise.resolve();
+            p.then(done, done);
+            later(done, dur + 120); // safety net
+          } else {
+            var frames = ys.map(function (y, i) {
+              var f = { transform: "translateY(" + y + "px)", offset: times[i] };
+              if (i < segEase.length) f.easing = bez(segEase[i]);
+              return f;
+            });
+            var anim = bounceEl.animate(frames, { duration: dur, fill: "forwards" });
+            anim.finished.then(done, done);
+            later(done, dur + 120);
+          }
+        }
+
+        /* ENT-008 clip-path inset reveal + spring pop to full size */
+        function playReveal() {
+          clipEl.animate([
+            { clipPath: "inset(0% 32% 0% 32%)" },
+            { clipPath: "inset(0% 0% 0% 0%)" }
+          ], { duration: 560, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" });
+
+          if (hasMotion) {
+            window.Motion.animate(clipEl, { scale: [0.93, 1] }, {
+              type: "spring", stiffness: 240, damping: 16, mass: 0.9
+            });
+          } else {
+            clipEl.animate([
+              { transform: "scale(0.93)" },
+              { transform: "scale(1.03)", offset: 0.55 },
+              { transform: "scale(0.99)", offset: 0.78 },
+              { transform: "scale(1)" }
+            ], { duration: 620, easing: "ease-out", fill: "forwards" });
+          }
+
+          // wordmark letters stagger up, rules sweep in
+          chEls.forEach(function (el, i) {
+            el.animate([
+              { opacity: 0, transform: "translateY(14px)" },
+              { opacity: 1, transform: "translateY(0)" }
+            ], { duration: 420, delay: 140 + i * 26, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" });
+          });
+          ruleEls.forEach(function (el) {
+            el.animate([
+              { opacity: 0, transform: "scaleX(0)" },
+              { opacity: 1, transform: "scaleX(1)" }
+            ], { duration: 480, delay: 200, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" });
+          });
+          loadUi.animate([
+            { opacity: 0, transform: "translateY(8px)" },
+            { opacity: 1, transform: "translateY(0)" }
+          ], { duration: 450, delay: 260, easing: "ease-out", fill: "forwards" });
+        }
+
+        /* The enter ball dribbles in with the same PHY-027 settle bounce
+           as the crest, then keeps dribbling until it is tapped */
+        function playBallIntro() {
+          var D = 120;
+          var dur = 1500;
+          var frac = [-1, 0, -0.36, 0, -0.16, 0, -0.055, 0];
+          var times = [0, 0.36, 0.55, 0.70, 0.81, 0.90, 0.96, 1];
+          var ys = frac.map(function (f) { return f * D; });
+          var bez = function (a) { return "cubic-bezier(" + a.join(",") + ")"; };
+          var fall = [0.55, 0.06, 0.68, 0.19], rise = [0.25, 0.46, 0.45, 0.94];
+          var segEase = [fall, rise, fall, rise, fall, rise, fall];
+
+          enterSquashEl.animate([
+            { transform: "scale(0.97, 1.05)", offset: 0 },
+            { transform: "scale(0.96, 1.07)", offset: 0.18 },
+            { transform: "scale(0.99, 1.01)", offset: 0.33 },
+            { transform: "scale(1.17, 0.78)", offset: 0.36 },
+            { transform: "scale(0.96, 1.05)", offset: 0.42 },
+            { transform: "scale(1, 1)", offset: 0.55 },
+            { transform: "scale(1.01, 0.99)", offset: 0.67 },
+            { transform: "scale(1.11, 0.85)", offset: 0.70 },
+            { transform: "scale(0.98, 1.03)", offset: 0.75 },
+            { transform: "scale(1, 1)", offset: 0.81 },
+            { transform: "scale(1.07, 0.90)", offset: 0.90 },
+            { transform: "scale(0.99, 1.01)", offset: 0.94 },
+            { transform: "scale(1.03, 0.96)", offset: 0.96 },
+            { transform: "scale(1, 1)", offset: 1 }
+          ], { duration: dur, fill: "forwards" });
+
+          enterShadow.animate([
+            { transform: "scaleX(0.45)", opacity: 0.16, offset: 0, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 0.36, easing: bez(rise) },
+            { transform: "scaleX(0.62)", opacity: 0.27, offset: 0.55, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 0.70, easing: bez(rise) },
+            { transform: "scaleX(0.78)", opacity: 0.36, offset: 0.81, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 0.90, easing: bez(rise) },
+            { transform: "scaleX(0.9)", opacity: 0.44, offset: 0.96, easing: bez(fall) },
+            { transform: "scaleX(1)", opacity: 0.5, offset: 1 }
+          ], { duration: dur, fill: "forwards" });
+
+          var frames = ys.map(function (y, i) {
+            var f = { transform: "translateY(" + y + "px)", offset: times[i] };
+            if (i < segEase.length) f.easing = bez(segEase[i]);
+            return f;
+          });
+          var anim = enterBounceEl.animate(frames, { duration: dur, fill: "forwards" });
+          var settled = false;
+          function done() {
+            if (settled || !running || finished) return;
+            settled = true;
+            // hand off from the one-shot dribble to the idle dribble loop
+            enterZone.classList.add("dribbling");
+            [enterBounceEl, enterSquashEl, enterShadow].forEach(function (el) {
+              el.getAnimations().forEach(function (a) { a.cancel(); });
+            });
+            enterBtn.focus({ preventScroll: true });
+          }
+          anim.finished.then(done, done);
+          later(done, dur + 120); // safety net
+        }
+
+        function showEnter() {
+          if (!running || finished) return;
+          enterZone.classList.add("ready");
+          prepareAd(); // start buffering the right film so Enter plays it at once
+          srStatus.textContent = "Loading complete. Press the basketball to enter.";
+          if (RM) {
+            enterZone.style.opacity = "1";
+            enterShadow.style.opacity = "0.5";
+            enterBtn.focus({ preventScroll: true });
+            return;
+          }
+          playBallIntro();
+        }
+
+        function playProgress(totalMs, done) {
+          var t0 = performance.now();
+          function tick(now) {
+            if (!running) return;
+            var t = Math.min((now - t0) / totalMs, 1);
+            var eased = 1 - Math.pow(1 - t, 2.1);
+            var v = Math.round(eased * 100);
+            barFill.style.width = v + "%";
+            pct.textContent = v + "%";
+            if (t < 1) { rafId = requestAnimationFrame(tick); }
+            else { srStatus.textContent = "Loading complete"; done(); }
+          }
+          rafId = requestAnimationFrame(tick);
+        }
+
+        function exitLoader(onDone) {
+          if (finished) return;
+          finished = true;
+          running = false;
+          var anim = loader.animate([
+            { transform: "translateY(0)" },
+            { transform: "translateY(-102%)" }
+          ], { duration: RM ? 200 : 850, easing: "cubic-bezier(0.76, 0, 0.24, 1)", fill: "forwards" });
+          document.body.classList.add("entered");
+          anim.finished.then(function () {
+            loader.classList.add("gone");
+            if (onDone) { onDone(); }
+            else { homeFocus.focus({ preventScroll: true }); }
+          }, function () {
+            loader.classList.add("gone");
+            if (onDone) { onDone(); }
+          });
+        }
+
+        /* ---------- Fullscreen video ad ---------- */
+        var adOpen = false;
+        var adTimer = null;
+        var adSrcSet = "";
+
+        function pickAdSrc() {
+          // same 700px breakpoint as the home backgrounds:
+          // portrait 9:16 film on phones, widescreen 16:9 film above it
+          return window.matchMedia("(max-width: 700px)").matches
+            ? "assets/asset-01.mp4"
+            : "assets/asset-02.mp4";
+        }
+
+        function prepareAd() {
+          var src = pickAdSrc();
+          if (adSrcSet !== src) {
+            adSrcSet = src;
+            adVideo.src = src;
+            adVideo.load();
+          }
+        }
+
+        function ensureSkipBtn() {
+          if (skipAdBtn) return skipAdBtn;
+          var b = document.createElement("button");
+          b.type = "button";
+          b.id = "skipAdBtn";
+          b.disabled = true;
+          b.textContent = "Skip in 5s";
+          b.addEventListener("click", function () {
+            if (b.disabled) return;
+            closeAd();
+          });
+          adEl.appendChild(b);
+          skipAdBtn = b;
+          return b;
+        }
+
+        function startSkipCountdown() {
+          skipAdBtn = ensureSkipBtn();
+          var start = performance.now();
+          skipAdBtn.disabled = true;
+          skipAdBtn.textContent = "Skip in 5s";
+          function update() {
+            var left = 5 - (performance.now() - start) / 1000;
+            if (left <= 0) {
+              if (adTimer) { clearInterval(adTimer); adTimer = null; }
+              skipAdBtn.disabled = false;
+              skipAdBtn.textContent = "Skip Ad";
+              srStatus.textContent = "You can skip this ad now.";
+            } else {
+              skipAdBtn.textContent = "Skip in " + Math.ceil(left) + "s";
+            }
+          }
+          update();
+          adTimer = setInterval(update, 200);
+        }
+
+        function showAd() {
+          if (adOpen) return;
+          adOpen = true;
+          prepareAd();
+          adEl.getAnimations().forEach(function (a) { a.cancel(); });
+          adEl.style.opacity = "";
+          adEl.classList.remove("gone");
+          try { adVideo.currentTime = 0; } catch (e) {}
+          startSkipCountdown();
+          srStatus.textContent = "Advertisement playing. You can skip it in 5 seconds.";
+          var p = adVideo.play();
+          if (p && typeof p.catch === "function") {
+            p.catch(function () {
+              // if sound-on playback is refused, keep the film rolling muted
+              adVideo.muted = true;
+              var p2 = adVideo.play();
+              if (p2 && typeof p2.catch === "function") { p2.catch(function () {}); }
+            });
+          }
+        }
+
+        function closeAd() {
+          if (!adOpen) return;
+          adOpen = false;
+          if (adTimer) { clearInterval(adTimer); adTimer = null; }
+          adVideo.pause();
+          srStatus.textContent = "Welcome to The Virginia Legacy";
+          var anim = adEl.animate([
+            { opacity: 1 },
+            { opacity: 0 }
+          ], { duration: RM ? 150 : 450, easing: "ease-out", fill: "forwards" });
+          var done = function () {
+            adEl.classList.add("gone");
+            adEl.getAnimations().forEach(function (a) { a.cancel(); });
+            adEl.style.opacity = "";
+            if (skipAdBtn) { skipAdBtn.remove(); skipAdBtn = null; }
+            homeFocus.focus({ preventScroll: true });
+          };
+          anim.finished.then(done, done);
+          later(done, (RM ? 150 : 450) + 120); // safety net
+        }
+
+        function resetAd() {
+          adOpen = false;
+          if (adTimer) { clearInterval(adTimer); adTimer = null; }
+          adVideo.pause();
+          adEl.getAnimations().forEach(function (a) { a.cancel(); });
+          adEl.style.opacity = "";
+          adEl.classList.add("gone");
+          if (skipAdBtn) { skipAdBtn.remove(); skipAdBtn = null; }
+        }
+
+        function settleInstantly() {
+          // jump every animated element to its end state
+          [bounceEl, clipEl, squashEl, shadowEl].forEach(function (el) {
+            el.getAnimations().forEach(function (a) { a.cancel(); });
+          });
+          chEls.forEach(function (el) { el.getAnimations().forEach(function (a) { a.cancel(); }); });
+          ruleEls.forEach(function (el) { el.getAnimations().forEach(function (a) { a.cancel(); }); });
+          bounceEl.style.transform = "translateY(0)";
+          clipEl.style.clipPath = "inset(0% 0% 0% 0%)";
+          clipEl.style.transform = "scale(1)";
+          squashEl.style.transform = "scale(1, 1)";
+          shadowEl.style.opacity = "0.5";
+          shadowEl.style.transform = "scaleX(1)";
+          chEls.forEach(function (el) { el.style.opacity = "1"; });
+          ruleEls.forEach(function (el) { el.style.opacity = "1"; });
+          loadUi.style.opacity = "1";
+          barFill.style.width = "100%";
+          pct.textContent = "100%";
+          // settle the enter ball too: resting under the crest, ready to tap
+          [enterBounceEl, enterSquashEl, enterShadow].forEach(function (el) {
+            el.getAnimations().forEach(function (a) { a.cancel(); });
+            el.style.transform = ""; el.style.opacity = "";
+          });
+          enterZone.getAnimations().forEach(function (a) { a.cancel(); });
+          enterZone.classList.remove("dribbling");
+          enterZone.classList.add("ready");
+          enterZone.style.opacity = "1";
+          enterShadow.style.opacity = "0.5";
+        }
+
+        function runIntro() {
+          clearTimers();
+          resetAd();
+          running = true;
+          finished = false;
+          document.body.classList.remove("entered");
+          loader.classList.remove("gone");
+          loader.getAnimations().forEach(function (a) { a.cancel(); });
+          loader.style.transform = "";
+          // reset animated states
+          [bounceEl, clipEl, squashEl, shadowEl, loadUi].forEach(function (el) {
+            el.getAnimations().forEach(function (a) { a.cancel(); });
+            el.style.transform = ""; el.style.opacity = "";
+          });
+          chEls.forEach(function (el) { el.getAnimations().forEach(function (a) { a.cancel(); }); });
+          ruleEls.forEach(function (el) { el.getAnimations().forEach(function (a) { a.cancel(); }); });
+          clipEl.style.clipPath = "inset(0% 32% 0% 32%)";
+          chEls.forEach(function (el) { el.style.opacity = "0"; });
+          ruleEls.forEach(function (el) { el.style.opacity = "0"; });
+          loadUi.style.opacity = "0";
+          barFill.style.width = "0%";
+          pct.textContent = "0%";
+          srStatus.textContent = "Loading The Virginia Legacy";
+          ringsEl.innerHTML = "";
+          enterZone.classList.remove("ready", "dribbling");
+          enterZone.getAnimations().forEach(function (a) { a.cancel(); });
+          enterZone.style.opacity = "";
+          [enterBounceEl, enterSquashEl, enterShadow].forEach(function (el) {
+            el.getAnimations().forEach(function (a) { a.cancel(); });
+            el.style.transform = ""; el.style.opacity = "";
+          });
+
+          if (RM) {
+            // Reduced motion: simple fade-in, quick fill, gentle exit
+            bounceEl.style.transform = "translateY(0)";
+            clipEl.style.clipPath = "inset(0% 0% 0% 0%)";
+            shadowEl.style.opacity = "0.5";
+            chEls.forEach(function (el) { el.style.opacity = "1"; });
+            ruleEls.forEach(function (el) { el.style.opacity = "1"; });
+            loadUi.style.opacity = "1";
+            playProgress(900, showEnter);
+            return;
+          }
+
+          var revealed = false;
+          playProgress(2900, showEnter);
+          later(function () {
+            playBounce(function () {
+              if (revealed || !running) return;
+              revealed = true;
+              playReveal();
+            });
+          }, 150);
+        }
+
+        enterBtn.addEventListener("click", function () {
+          if (finished) return;
+          clearTimers();
+          running = false;
+          showAd();
+          exitLoader(function () {});
+        });
+
+        skipBtn.addEventListener("click", function () {
+          if (finished) return;
+          clearTimers();
+          running = false;
+          settleInstantly();
+          showAd();
+          setTimeout(function () { exitLoader(function () {}); }, 60);
+        });
+
+        adVideo.addEventListener("ended", function () {
+          closeAd();
+        });
+
+        /* ---------- Mailing list form ---------- */
+        /* Signups post to the "Virginia Legacy Mailing List" Google
+           Form, whose responses are the mailing list collection:
+           entry.488930113 is that form's Email address field. The
+           post is no-cors because Google sends no CORS headers back;
+           a resolved fetch means the signup was delivered, while a
+           rejected one (offline, blocked, timed out) shows the error
+           state instead of a fake confirmation. */
+        var MAIL_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdPnZHkH8VT9SQGtEMGYJMmVB46Zu1bQYhS8KhmritsyO_C3Q/formResponse";
+        var mailForm = document.getElementById("mailForm");
+        var mailError = document.getElementById("mailError");
+        var mailDone = document.getElementById("mailDone");
+        var mailSubmit = document.getElementById("mailSubmit");
+        var mailSending = false;
+        mailForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (mailSending) return;
+          var v = homeFocus.value.trim();
+          var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+          if (!ok) {
+            mailError.textContent = "Please enter a valid email address.";
+            mailError.hidden = false;
+            mailDone.hidden = true;
+            homeFocus.setAttribute("aria-invalid", "true");
+            homeFocus.focus();
+            srStatus.textContent = "Please enter a valid email address.";
+            return;
+          }
+          mailError.hidden = true;
+          homeFocus.removeAttribute("aria-invalid");
+          mailSending = true;
+          mailSubmit.disabled = true;
+          mailSubmit.textContent = "Joining...";
+          var body = new URLSearchParams();
+          body.append("entry.488930113", v);
+          var ctrl = ("AbortController" in window) ? new AbortController() : null;
+          var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 10000) : null;
+          fetch(MAIL_FORM_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: body.toString(),
+            signal: ctrl ? ctrl.signal : undefined
+          }).then(function () {
+            if (timer) clearTimeout(timer);
+            mailSending = false;
+            mailSubmit.disabled = false;
+            mailSubmit.textContent = "Join";
+            mailForm.reset();
+            mailDone.hidden = false;
+            srStatus.textContent = "You are on the list. Welcome to the Legacy.";
+          }).catch(function () {
+            if (timer) clearTimeout(timer);
+            mailSending = false;
+            mailSubmit.disabled = false;
+            mailSubmit.textContent = "Join";
+            mailError.textContent = "That didn't go through. Check your connection and try again.";
+            mailError.hidden = false;
+            mailDone.hidden = true;
+            srStatus.textContent = "That didn't go through. Check your connection and try again.";
+          });
+        });
+        homeFocus.addEventListener("input", function () {
+          if (!mailError.hidden) {
+            mailError.hidden = true;
+            homeFocus.removeAttribute("aria-invalid");
+          }
+          mailDone.hidden = true;
+        });
+
+        /* ---------- Hamburger nav + coming soon sections ---------- */
+        var navToggle = document.getElementById("navToggle");
+        var navScrim = document.getElementById("navScrim");
+        var navPanel = document.getElementById("navPanel");
+        var soonView = document.getElementById("soonView");
+        var soonTitle = document.getElementById("soonTitle");
+        var soonLine = document.getElementById("soonLine");
+        var soonBack = document.getElementById("soonBack");
+        var coachView = document.getElementById("coachView");
+        var coachBack = document.getElementById("coachBack");
+        var shopView = document.getElementById("shopView");
+        var shopBack = document.getElementById("shopBack");
+        var menuOpen = false;
+
+        var SECTIONS = {
+          team: { title: "Team", line: "Meet the roster. Player profiles, stats and stories are on the way." },
+          coaches: { title: "Coaches", line: "Meet the staff leading the Legacy. Coach bios are on the way." },
+          tickets: { title: "Tickets", line: "Game day is coming. Ticket sales and seating info are on the way." },
+          shop: { title: "Shop", line: "Legacy gear is coming. Jerseys, tees and more are on the way." }
+        };
+
+        function setMenu(open) {
+          menuOpen = open;
+          navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+          navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          navPanel.classList.toggle("open", open);
+          navPanel.setAttribute("aria-hidden", open ? "false" : "true");
+          navScrim.classList.toggle("open", open);
+        }
+
+        function openCoach() {
+          setMenu(false);
+          closeSoon();
+          closeShop();
+          coachView.scrollTop = 0;
+          coachView.classList.add("open");
+          coachView.setAttribute("aria-hidden", "false");
+          srStatus.textContent = "Coaches — spotlight on Tamecka Dixon";
+          coachBack.focus({ preventScroll: true });
+        }
+
+        function closeCoach() {
+          coachView.classList.remove("open");
+          coachView.setAttribute("aria-hidden", "true");
+        }
+
+        function openShop() {
+          setMenu(false);
+          closeSoon();
+          closeCoach();
+          shopView.scrollTop = 0;
+          shopView.classList.add("open");
+          shopView.setAttribute("aria-hidden", "false");
+          srStatus.textContent = "Shop — Legacy gear, prices coming soon";
+          shopBack.focus({ preventScroll: true });
+        }
+
+        function closeShop() {
+          closeDetail();
+          shopView.classList.remove("open");
+          shopView.setAttribute("aria-hidden", "true");
+        }
+
+        function openSoon(key) {
+          if (key === "coaches") { openCoach(); return; }
+          if (key === "shop") { openShop(); return; }
+          var s = SECTIONS[key];
+          if (!s) return;
+          soonTitle.textContent = s.title;
+          soonLine.textContent = s.line;
+          setMenu(false);
+          closeCoach();
+          closeShop();
+          soonView.classList.add("open");
+          soonView.setAttribute("aria-hidden", "false");
+          srStatus.textContent = s.title + " — coming soon";
+          soonBack.focus({ preventScroll: true });
+        }
+
+        function closeSoon() {
+          soonView.classList.remove("open");
+          soonView.setAttribute("aria-hidden", "true");
+        }
+
+        navToggle.addEventListener("click", function () { setMenu(!menuOpen); });
+        navScrim.addEventListener("click", function () { setMenu(false); });
+        navPanel.querySelectorAll(".nav-link").forEach(function (btn) {
+          btn.addEventListener("click", function () { openSoon(btn.getAttribute("data-section")); });
+        });
+        soonBack.addEventListener("click", function () {
+          closeSoon();
+          homeFocus.focus({ preventScroll: true });
+        });
+        coachBack.addEventListener("click", function () {
+          closeCoach();
+          homeFocus.focus({ preventScroll: true });
+        });
+        shopBack.addEventListener("click", function () {
+          closeShop();
+          homeFocus.focus({ preventScroll: true });
+        });
+        // header brand returns to the home screen from any section page
+        var brandBtn = document.getElementById("brandBtn");
+        brandBtn.addEventListener("click", function () {
+          setMenu(false);
+          if (shopView.classList.contains("open")) {
+            closeShop();
+            homeFocus.focus({ preventScroll: true });
+          } else if (coachView.classList.contains("open")) {
+            closeCoach();
+            homeFocus.focus({ preventScroll: true });
+          } else if (soonView.classList.contains("open")) {
+            closeSoon();
+            homeFocus.focus({ preventScroll: true });
+          }
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key !== "Escape") return;
+          if (detailView && detailView.classList.contains("open")) return; // detail handles its own Escape
+          if (shopView.classList.contains("open")) { closeShop(); }
+          else if (coachView.classList.contains("open")) { closeCoach(); }
+          else if (soonView.classList.contains("open")) { closeSoon(); }
+          else if (menuOpen) { setMenu(false); }
+        });
+
+        /* ---------- Shop: app-style storefront ---------- */
+        var PRODUCTS = {
+          "navy-jersey": { name: "Navy Jersey", cat: "Jersey", type: "single", custom: true,
+            desc: "The navy game jersey with orange trim, LEGACY across the chest and the crest on the back.",
+            front: "assets/asset-08.jpg", back: "assets/asset-13.jpg",
+            frontAlt: "Navy Virginia Legacy jersey, front", backAlt: "Navy Virginia Legacy jersey, back: crest over the SAMPLE nameplate and number 3" },
+          "white-jersey": { name: "White Jersey", cat: "Jersey", type: "single", custom: true,
+            desc: "The white game jersey with navy lettering, orange trim and the crest on the back.",
+            front: "assets/asset-09.jpg", back: "assets/asset-14.jpg",
+            frontAlt: "White Virginia Legacy jersey, front", backAlt: "White Virginia Legacy jersey, back: crest over the SAMPLE nameplate and number 3" },
+          "navy-shorts": { name: "Navy Shorts", cat: "Shorts", type: "single", custom: false,
+            desc: "Navy game shorts with white and orange side panels, matching the navy jersey.",
+            front: "assets/asset-10.jpg", back: "assets/asset-15.jpg",
+            frontAlt: "Navy Virginia Legacy shorts, front", backAlt: "Navy Virginia Legacy shorts, back" },
+          "white-shorts": { name: "White Shorts", cat: "Shorts", type: "single", custom: false,
+            desc: "White game shorts with navy and orange side panels, matching the white jersey.",
+            front: "assets/asset-11.jpg", back: "assets/asset-16.jpg",
+            frontAlt: "White Virginia Legacy shorts, front", backAlt: "White Virginia Legacy shorts, back" },
+          "navy-set": { name: "Navy Full Set", cat: "Full Set", type: "set", custom: true,
+            desc: "The complete navy kit: jersey and matching shorts together.",
+            front: "assets/asset-08.jpg", front2: "assets/asset-10.jpg",
+            back: "assets/asset-13.jpg", back2: "assets/asset-15.jpg",
+            frontAlt: "Navy Full Set, front: jersey and shorts", backAlt: "Navy Full Set, back: jersey with crest and SAMPLE nameplate, and shorts" },
+          "white-set": { name: "White Full Set", cat: "Full Set", type: "set", custom: true,
+            desc: "The complete white kit: jersey and matching shorts together.",
+            front: "assets/asset-09.jpg", front2: "assets/asset-11.jpg",
+            back: "assets/asset-14.jpg", back2: "assets/asset-16.jpg",
+            frontAlt: "White Full Set, front: jersey and shorts", backAlt: "White Full Set, back: jersey with crest and SAMPLE nameplate, and shorts" },
+          "hoodie": { name: "Legacy Crest Hoodie", cat: "Hoodie", type: "hoodie", custom: false,
+            desc: "Pullover hoodie with the full-color Legacy crest on the chest and a front pocket.",
+            white: "assets/asset-12.jpg", orange: "assets/asset-17.jpg",
+            frontAlt: "Legacy Crest Hoodie in white", backAlt: "Legacy Crest Hoodie in orange" }
+        };
+        var SIZES = ["S", "M", "L", "XL", "2XL"];
+        var favorites = {};
+        var favOnly = false;
+        var shopSearch = document.getElementById("shopSearch");
+        var shopGrid = document.getElementById("shopGrid");
+        var shopEmpty = document.getElementById("shopEmpty");
+        var favBadge = document.getElementById("favBadge");
+        var detailView = document.getElementById("detailView");
+        var detailMedia = document.getElementById("detailMedia");
+        var detailThumbs = document.getElementById("detailThumbs");
+        var detailName = document.getElementById("detailName");
+        var detailDesc = document.getElementById("detailDesc");
+        var detailViewOpts = document.getElementById("detailViewOpts");
+        var detailViewRow = document.getElementById("detailViewRow");
+        var detailColorOpts = document.getElementById("detailColorOpts");
+        var detailColorRow = document.getElementById("detailColorRow");
+        var detailSizeRow = document.getElementById("detailSizeRow");
+        var detailCustom = document.getElementById("detailCustom");
+        var detailCustomPill = document.getElementById("detailCustomPill");
+        var detailCustomFields = document.getElementById("detailCustomFields");
+        var detailCustomName = document.getElementById("detailCustomName");
+        var detailCustomPreview = document.getElementById("detailCustomPreview");
+        var detailPreviewName = document.getElementById("detailPreviewName");
+        var detailFav = document.getElementById("detailFav");
+        var qtyVal = document.getElementById("qtyVal");
+        var currentId = null;
+        var currentView = "front";
+        var currentColor = "white";
+        var qty = 1;
+
+        function favCount() { return Object.keys(favorites).filter(function (k) { return favorites[k]; }).length; }
+        function syncFavs() {
+          var n = favCount();
+          favBadge.hidden = n === 0;
+          favBadge.textContent = n;
+          shopView.querySelectorAll(".pcard").forEach(function (card) {
+            var btn = card.querySelector(".fav-btn");
+            if (btn) btn.setAttribute("aria-pressed", favorites[card.getAttribute("data-id")] ? "true" : "false");
+          });
+          if (currentId) detailFav.setAttribute("aria-pressed", favorites[currentId] ? "true" : "false");
+          applyFilter();
+        }
+        function applyFilter() {
+          var q = (shopSearch.value || "").trim().toLowerCase();
+          var visible = 0;
+          shopView.querySelectorAll(".pcard").forEach(function (card) {
+            var id = card.getAttribute("data-id");
+            var matchText = !q || (card.getAttribute("data-search") || "").indexOf(q) !== -1;
+            var matchFav = !favOnly || !!favorites[id];
+            var show = matchText && matchFav;
+            card.hidden = !show;
+            if (show) visible++;
+          });
+          shopEmpty.hidden = visible !== 0;
+          shopEmpty.textContent = favOnly && !q
+            ? "No favorites yet. Tap the heart on any piece to save it here."
+            : "No gear matches that search yet. Try jersey, shorts, set or hoodie.";
+        }
+        shopSearch.addEventListener("input", applyFilter);
+        document.getElementById("shopSearchBtn").addEventListener("click", function () { shopSearch.focus({ preventScroll: true }); });
+        document.getElementById("shopViewAll").addEventListener("click", function () {
+          shopSearch.value = "";
+          favOnly = false;
+          document.getElementById("shopNavFav").setAttribute("aria-pressed", "false");
+          applyFilter();
+          shopGrid.scrollIntoView({ block: "start" });
+        });
+
+        // favorites from the grid cards
+        shopView.querySelectorAll(".pcard .fav-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var card = btn.closest(".pcard");
+            var id = card.getAttribute("data-id");
+            favorites[id] = !favorites[id];
+            syncFavs();
+          });
+        });
+
+        /* ----- product detail screen ----- */
+        function detailImages() {
+          var p = PRODUCTS[currentId];
+          if (p.type === "hoodie") {
+            return [{ src: p[currentColor], alt: currentColor === "white" ? p.frontAlt : p.backAlt, on: true }];
+          }
+          if (p.type === "set") {
+            var f = currentView === "front";
+            return [
+              { src: f ? p.front : p.back, alt: p.frontAlt, on: true },
+              { src: f ? p.front2 : p.back2, alt: p.frontAlt, on: true, slotR: true }
+            ];
+          }
+          return [{ src: currentView === "front" ? p.front : p.back, alt: currentView === "front" ? p.frontAlt : p.backAlt, on: true }];
+        }
+        function renderDetailMedia() {
+          detailMedia.innerHTML = "";
+          detailImages().forEach(function (im) {
+            var img = document.createElement("img");
+            img.src = im.src;
+            img.alt = im.alt;
+            img.width = 1254; img.height = 1254;
+            if (im.slotR) img.className = "slot-r";
+            if (im.on) img.classList.add("on");
+            detailMedia.appendChild(img);
+          });
+        }
+        function renderThumbs() {
+          var p = PRODUCTS[currentId];
+          detailThumbs.innerHTML = "";
+          if (p.type === "hoodie") {
+            [["white", p.white], ["orange", p.orange]].forEach(function (pair) {
+              var b = document.createElement("button");
+              b.type = "button"; b.className = "detail-thumb";
+              b.setAttribute("aria-pressed", currentColor === pair[0] ? "true" : "false");
+              b.setAttribute("aria-label", "Show the " + pair[0] + " hoodie");
+              var img = document.createElement("img");
+              img.src = pair[1]; img.alt = ""; img.loading = "lazy";
+              b.appendChild(img);
+              b.addEventListener("click", function () { setColor(pair[0]); });
+              detailThumbs.appendChild(b);
+            });
+          } else {
+            [["front", p.front], ["back", p.back]].forEach(function (pair) {
+              var b = document.createElement("button");
+              b.type = "button"; b.className = "detail-thumb";
+              b.setAttribute("aria-pressed", currentView === pair[0] ? "true" : "false");
+              b.setAttribute("aria-label", "Show the " + pair[0] + " view");
+              var img = document.createElement("img");
+              img.src = pair[1]; img.alt = ""; img.loading = "lazy";
+              b.appendChild(img);
+              b.addEventListener("click", function () { setView(pair[0]); });
+              detailThumbs.appendChild(b);
+            });
+          }
+        }
+        function setView(v) {
+          currentView = v;
+          detailViewRow.querySelectorAll(".pill").forEach(function (pl) {
+            pl.setAttribute("aria-pressed", pl.getAttribute("data-view") === v ? "true" : "false");
+          });
+          renderDetailMedia(); renderThumbs();
+        }
+        function setColor(c) {
+          currentColor = c;
+          detailColorRow.querySelectorAll(".pill").forEach(function (pl) {
+            pl.setAttribute("aria-pressed", pl.getAttribute("data-color") === c ? "true" : "false");
+          });
+          renderDetailMedia(); renderThumbs();
+        }
+        function openDetail(id) {
+          var p = PRODUCTS[id];
+          if (!p) return;
+          currentId = id;
+          currentView = "front";
+          currentColor = "white";
+          qty = 1; qtyVal.textContent = "1";
+          detailName.textContent = p.name;
+          detailDesc.textContent = p.desc;
+          detailMedia.classList.toggle("set-media", p.type === "set");
+          // view pills (hidden for the hoodie, which switches by color)
+          detailViewOpts.hidden = p.type === "hoodie";
+          detailViewRow.innerHTML = "";
+          ["front", "back"].forEach(function (v) {
+            var b = document.createElement("button");
+            b.type = "button"; b.className = "pill"; b.setAttribute("data-view", v);
+            b.setAttribute("aria-pressed", v === "front" ? "true" : "false");
+            b.textContent = v === "front" ? "Front" : "Back";
+            b.addEventListener("click", function () { setView(v); });
+            detailViewRow.appendChild(b);
+          });
+          // hoodie color pills
+          detailColorOpts.hidden = p.type !== "hoodie";
+          detailColorRow.innerHTML = "";
+          if (p.type === "hoodie") {
+            [["white", "#ffffff", "White"], ["orange", "#ff7a1a", "Orange"]].forEach(function (c) {
+              var b = document.createElement("button");
+              b.type = "button"; b.className = "pill"; b.setAttribute("data-color", c[0]);
+              b.setAttribute("aria-pressed", c[0] === "white" ? "true" : "false");
+              var sw = document.createElement("span"); sw.className = "swatch";
+              var dot = document.createElement("i"); dot.style.background = c[1];
+              sw.appendChild(dot); sw.appendChild(document.createTextNode(c[2]));
+              b.appendChild(sw);
+              b.addEventListener("click", function () { setColor(c[0]); });
+              detailColorRow.appendChild(b);
+            });
+          }
+          // size pills
+          detailSizeRow.innerHTML = "";
+          SIZES.forEach(function (s) {
+            var b = document.createElement("button");
+            b.type = "button"; b.className = "pill size-pill";
+            b.setAttribute("aria-pressed", s === "M" ? "true" : "false");
+            b.textContent = s;
+            b.addEventListener("click", function () {
+              detailSizeRow.querySelectorAll(".pill").forEach(function (pl) { pl.setAttribute("aria-pressed", pl === b ? "true" : "false"); });
+            });
+            detailSizeRow.appendChild(b);
+          });
+          // custom back name (+$50) on jerseys and sets only
+          detailCustom.hidden = !p.custom;
+          detailCustomPill.setAttribute("aria-pressed", "false");
+          detailCustomFields.hidden = true;
+          detailCustomName.value = "";
+          detailCustomPreview.hidden = true;
+          detailFav.setAttribute("aria-pressed", favorites[id] ? "true" : "false");
+          renderDetailMedia(); renderThumbs();
+          detailView.scrollTop = 0;
+          detailView.classList.add("open");
+          detailView.setAttribute("aria-hidden", "false");
+          srStatus.textContent = p.name + " — price coming soon";
+          document.getElementById("detailBack").focus({ preventScroll: true });
+        }
+        function closeDetail() {
+          detailView.classList.remove("open");
+          detailView.setAttribute("aria-hidden", "true");
+          currentId = null;
+        }
+        shopView.querySelectorAll("[data-open-detail]").forEach(function (el) {
+          el.addEventListener("click", function () {
+            var card = el.closest(".pcard");
+            if (card) openDetail(card.getAttribute("data-id"));
+          });
+        });
+        document.getElementById("detailBack").addEventListener("click", closeDetail);
+        detailFav.addEventListener("click", function () {
+          if (!currentId) return;
+          favorites[currentId] = !favorites[currentId];
+          syncFavs();
+        });
+        detailCustomPill.addEventListener("click", function () {
+          var on = detailCustomPill.getAttribute("aria-pressed") !== "true";
+          detailCustomPill.setAttribute("aria-pressed", on ? "true" : "false");
+          detailCustomFields.hidden = !on;
+          if (on) detailCustomName.focus({ preventScroll: true });
+        });
+        detailCustomName.addEventListener("input", function () {
+          var v = detailCustomName.value.trim().toUpperCase();
+          detailCustomPreview.hidden = !v;
+          detailPreviewName.textContent = v;
+        });
+        document.getElementById("qtyMinus").addEventListener("click", function () {
+          qty = Math.max(1, qty - 1); qtyVal.textContent = qty;
+        });
+        document.getElementById("qtyPlus").addEventListener("click", function () {
+          qty = Math.min(9, qty + 1); qtyVal.textContent = qty;
+        });
+
+        /* ----- floating bottom nav ----- */
+        document.getElementById("shopNavHome").addEventListener("click", function () {
+          closeDetail();
+          closeShop();
+          homeFocus.focus({ preventScroll: true });
+        });
+        document.getElementById("shopNavShop").addEventListener("click", function () {
+          closeDetail();
+          shopView.scrollTo({ top: 0, behavior: "smooth" });
+        });
+        document.getElementById("shopNavSearch").addEventListener("click", function () {
+          closeDetail();
+          shopView.scrollTo({ top: 0, behavior: "smooth" });
+          shopSearch.focus({ preventScroll: true });
+        });
+        document.getElementById("shopNavFav").addEventListener("click", function () {
+          favOnly = !favOnly;
+          this.setAttribute("aria-pressed", favOnly ? "true" : "false");
+          closeDetail();
+          applyFilter();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && detailView.classList.contains("open")) closeDetail();
+        });
+
+        runIntro();
+      })();
+    </script>
+  </body>
+</html>
