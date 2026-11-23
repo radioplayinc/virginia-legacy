@@ -31,6 +31,17 @@
         overflow-x: hidden;
       }
       button { min-height: 2.75rem; font-family: inherit; cursor: pointer; }
+      /* ---------- Legal footer / skip link (free compliance, Nov 23 2026) ---------- */
+      .skip-link { position: fixed; top: -100px; left: 1rem; z-index: 999; background: #ff7a1a; color: #04122b; font-weight: 600; padding: .75rem 1rem; border-radius: 0 0 8px 8px; text-decoration: none; }
+      .skip-link:focus { top: 0; }
+      .mail-privacy { font-size: .85rem !important; letter-spacing: 0 !important; text-transform: none !important; color: #d7e0ee !important; max-width: 34rem; margin-top: .75rem !important; }
+      .mail-privacy a { color: #ffa03c; }
+      .site-footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.22); display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; font-size: .9rem; }
+      .site-footer a { color: #fff; }
+      .site-footer span { color: #c9d4e6; }
+      .legal-links { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.18); display: flex; flex-direction: column; gap: .25rem; }
+      .legal-links a { color: #fff; text-decoration: none; padding: .4rem 0; font-size: .95rem; }
+
 
       /* ---------- Home (revealed when the loader exits) ---------- */
       #home {
@@ -1721,6 +1732,7 @@
     </style>
   </head>
   <body>
+    <a class="skip-link" href="#home">Skip to main content</a>
     <!-- Home: the main page is the mailing list signup -->
     <main id="home">
       <img src="assets/asset-01.png" alt="The Virginia Legacy crest" />
@@ -1736,7 +1748,16 @@
         </div>
         <p class="mail-error" id="mailError" role="alert" hidden>Please enter a valid email address.</p>
         <p class="mail-done" id="mailDone" hidden>You&rsquo;re on the list. Welcome to the Legacy.</p>
+        <p class="mail-privacy">By joining, you agree to receive Legacy news, ticket drops and shop releases. See our <a href="privacy.html">Privacy Policy</a>. Unsubscribe anytime. We do not sell your email.</p>
       </form>
+      <footer class="site-footer">
+        <span>Virginia Legacy Women's Basketball</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="cookies.html">Cookie Policy</a>
+        <a href="accessibility.html">Accessibility</a>
+        <a href="refunds.html">Refunds and Shipping</a>
+      </footer>
     </main>
 
     <!-- Site header: hidden on the loading screen, appears once the
@@ -1761,6 +1782,13 @@
       <button class="nav-link" type="button" data-section="coaches">Coaches <span class="chev" aria-hidden="true">›</span></button>
       <button class="nav-link" type="button" data-section="tickets">Tickets <span class="chev" aria-hidden="true">›</span></button>
       <button class="nav-link" type="button" data-section="shop">Shop <span class="chev" aria-hidden="true">›</span></button>
+      <div class="legal-links" aria-label="Legal pages">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="cookies.html">Cookie Policy</a>
+        <a href="accessibility.html">Accessibility Statement</a>
+        <a href="refunds.html">Refunds and Shipping</a>
+      </div>
     </nav>
 
     <!-- Coach spotlight: Tamecka Dixon (Coaches section) -->
@@ -2461,6 +2489,7 @@
             { transform: "translateY(-102%)" }
           ], { duration: RM ? 200 : 850, easing: "cubic-bezier(0.76, 0, 0.24, 1)", fill: "forwards" });
           document.body.classList.add("entered");
+          document.title = "Virginia Legacy | Women's Basketball";
           anim.finished.then(function () {
             loader.classList.add("gone");
             if (onDone) { onDone(); }
